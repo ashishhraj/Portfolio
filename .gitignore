@@ -1,0 +1,14 @@
+backend/.env
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/chroma_store/
+*.pyc
+*.pyo
+.DS_Store
+node_modules/
+.env
+*.egg-info/
+dist/
+build/
+.pytest_cache/

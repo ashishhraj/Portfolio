@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio | Big Data & Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --surface: #111827;
+  --surface2: #1a2236;
+  --border: #1e2d4a;
+  --accent: #2563eb;
+  --accent2: #3b82f6;
+  --accent-glow: rgba(37,99,235,0.18);
+  --gold: #f59e0b;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --green: #10b981;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,15,30,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:1.2rem;letter-spacing:-0.5px;color:#fff}
+.nav-logo span{color:var(--accent2)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.88rem;font-weight:500;letter-spacing:0.3px;transition:color 0.2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--accent);color:#fff;padding:0.5rem 1.2rem;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--text2);border-radius:2px;display:block}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(37,99,235,0.12) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(16,185,129,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--surface);border:1px solid var(--border);padding:0.35rem 0.9rem;border-radius:20px;font-size:0.78rem;color:var(--text2);margin-bottom:1.5rem;letter-spacing:0.5px}
+.hero-badge .dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+h1{font-size:3rem;font-weight:800;line-height:1.15;letter-spacing:-1.5px;margin-bottom:1rem}
+h1 span{color:var(--accent2)}
+.hero-sub{font-size:1.05rem;color:var(--text2);margin-bottom:2rem;max-width:480px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2.5rem}
+.tag{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:0.3rem 0.75rem;border-radius:6px;font-size:0.78rem;font-weight:500;font-family:'JetBrains Mono',monospace}
+.btn-group{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.8rem 1.8rem;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;border:none;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.2s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,99,235,0.35)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent2);color:var(--accent2)}
+.hero-visual{display:flex;justify-content:center;align-items:center}
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;width:320px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--green))}
+.hero-card-avatar{width:72px;height:72px;background:linear-gradient(135deg,var(--accent),var(--green));border-radius:50%;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff}
+.hero-card h3{font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
+.hero-card p{font-size:0.82rem;color:var(--text2);margin-bottom:1rem}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.stat{background:var(--surface2);border-radius:8px;padding:0.75rem;text-align:center}
+.stat strong{display:block;font-size:1.3rem;font-weight:800;color:var(--accent2)}
+.stat small{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
+
+/* ── SECTION COMMONS ── */
+section{padding:6rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:0.5rem;font-family:'JetBrains Mono',monospace}
+h2.section-title{font-size:2.2rem;font-weight:800;letter-spacing:-1px;margin-bottom:1rem}
+.section-desc{color:var(--text2);max-width:560px;margin-bottom:3rem}
+
+/* ── ABOUT / SKILLS ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{color:var(--text2);margin-bottom:1rem;line-height:1.8}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:1.5rem}
+.skill-chip{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.6rem 1rem;font-size:0.82rem;display:flex;align-items:center;gap:0.5rem;font-weight:500}
+.skill-chip::before{content:'▸';color:var(--accent2);font-size:0.7rem}
+.exp-timeline{margin-top:2rem}
+.exp-item{position:relative;padding-left:1.5rem;margin-bottom:2rem;border-left:2px solid var(--border)}
+.exp-item::before{content:'';position:absolute;left:-5px;top:6px;width:8px;height:8px;background:var(--accent2);border-radius:50%}
+.exp-item h4{font-weight:700;font-size:0.95rem;margin-bottom:0.2rem}
+.exp-item .company{color:var(--accent2);font-size:0.82rem;font-weight:600;margin-bottom:0.25rem}
+.exp-item .period{color:var(--text3);font-size:0.78rem;margin-bottom:0.5rem;font-family:'JetBrains Mono',monospace}
+.exp-item p{color:var(--text2);font-size:0.85rem;line-height:1.7}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;display:flex;flex-direction:column}
+.project-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 40px rgba(37,99,235,0.15)}
+.project-img{height:180px;background:linear-gradient(135deg,var(--surface2),var(--border));display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+.project-img img{width:100%;height:100%;object-fit:cover}
+.project-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.75rem}
+.project-tag{background:var(--surface2);color:var(--accent2);padding:0.2rem 0.6rem;border-radius:4px;font-size:0.72rem;font-weight:600;font-family:'JetBrains Mono',monospace}
+.project-body h3{font-weight:700;margin-bottom:0.5rem;font-size:1.05rem}
+.project-body p{color:var(--text2);font-size:0.85rem;line-height:1.65;flex:1}
+.project-links{display:flex;gap:0.75rem;margin-top:1rem}
+.project-link{color:var(--text3);font-size:0.8rem;text-decoration:none;display:flex;align-items:center;gap:0.3rem;transition:color 0.2s}
+.project-link:hover{color:var(--accent2)}
+.featured-badge{position:absolute;top:12px;right:12px;background:var(--gold);color:#000;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.7rem;font-weight:700}
+
+/* ── CERTIFICATIONS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.cert-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:border-color 0.2s,transform 0.2s;position:relative;overflow:hidden}
+.cert-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.cert-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold)}
+.cert-issuer{font-size:0.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem}
+.cert-title{font-weight:700;font-size:0.95rem;margin-bottom:0.5rem}
+.cert-date{font-size:0.78rem;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-bottom:0.75rem}
+.cert-skills{display:flex;flex-wrap:wrap;gap:0.3rem}
+.cert-skill{background:rgba(245,158,11,0.1);color:var(--gold);padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:500}
+.cert-link{display:inline-flex;align-items:center;gap:0.3rem;color:var(--text3);font-size:0.78rem;text-decoration:none;margin-top:0.75rem;transition:color 0.2s}
+.cert-link:hover{color:var(--gold)}
+
+/* ── LOADING STATES ── */
+.skeleton{background:linear-gradient(90deg,var(--surface2) 25%,var(--border) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── CHATBOT ── */
+.chat-trigger{position:fixed;bottom:2rem;right:2rem;width:60px;height:60px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 8px 32px rgba(37,99,235,0.45);z-index:1000;transition:transform 0.2s,box-shadow 0.2s}
+.chat-trigger:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(37,99,235,0.6)}
+.chat-trigger svg{width:26px;height:26px;fill:#fff}
+.chat-panel{position:fixed;bottom:6rem;right:2rem;width:380px;max-height:600px;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,0.6);z-index:999;display:flex;flex-direction:column;overflow:hidden;transform:translateY(20px) scale(0.95);opacity:0;pointer-events:none;transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1)}
+.chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all}
+.chat-header{background:var(--surface2);padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid var(--border)}
+.chat-avatar{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--green));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.chat-header h4{font-weight:700;font-size:0.9rem;flex:1}
+.chat-header p{font-size:0.72rem;color:var(--green)}
+.chat-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.2rem;padding:4px;line-height:1}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;min-height:200px;max-height:380px}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.msg{max-width:85%;display:flex;flex-direction:column;gap:0.2rem}
+.msg.user{align-self:flex-end;align-items:flex-end}
+.msg.bot{align-self:flex-start;align-items:flex-start}
+.msg-bubble{padding:0.65rem 0.9rem;border-radius:12px;font-size:0.84rem;line-height:1.55}
+.msg.user .msg-bubble{background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.msg.bot .msg-bubble{background:var(--surface2);color:var(--text);border-bottom-left-radius:4px;border:1px solid var(--border)}
+.msg-time{font-size:0.65rem;color:var(--text3)}
+.chat-suggestions{padding:0.5rem 1rem;display:flex;flex-wrap:wrap;gap:0.4rem}
+.chat-suggestion{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:0.3rem 0.7rem;border-radius:16px;font-size:0.72rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.chat-suggestion:hover{border-color:var(--accent2);color:var(--accent2)}
+.chat-input-area{padding:0.75rem 1rem;border-top:1px solid var(--border);display:flex;gap:0.5rem}
+.chat-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.6rem 0.9rem;border-radius:10px;font-size:0.85rem;outline:none;font-family:'Inter',sans-serif;transition:border-color 0.2s}
+.chat-input:focus{border-color:var(--accent2)}
+.chat-input::placeholder{color:var(--text3)}
+.chat-send{background:var(--accent);border:none;color:#fff;width:38px;height:38px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;flex-shrink:0}
+.chat-send:hover{background:var(--accent2)}
+.chat-send:disabled{opacity:0.5;cursor:not-allowed}
+.typing-dot{display:inline-flex;gap:4px;padding:0.65rem 0.9rem}
+.typing-dot span{width:6px;height:6px;background:var(--text3);border-radius:50%;animation:bounce 1.2s infinite}
+.typing-dot span:nth-child(2){animation-delay:0.2s}
+.typing-dot span:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.contact-info p{color:var(--text2);margin-bottom:2rem;line-height:1.8}
+.contact-links{display:flex;flex-direction:column;gap:0.75rem}
+.contact-link{display:flex;align-items:center;gap:0.75rem;color:var(--text2);text-decoration:none;padding:0.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:0.88rem;transition:all 0.2s}
+.contact-link:hover{border-color:var(--accent2);color:var(--text);transform:translateX(4px)}
+.contact-link-icon{width:32px;height:32px;background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+
+/* ── ADMIN PANEL ── */
+.admin-login{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);z-index:2000;display:none;align-items:center;justify-content:center}
+.admin-login.show{display:flex}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem;width:380px;box-shadow:var(--shadow)}
+.login-card h3{font-size:1.4rem;font-weight:800;margin-bottom:0.5rem}
+.login-card p{color:var(--text2);font-size:0.85rem;margin-bottom:2rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.8rem;font-weight:600;color:var(--text2);margin-bottom:0.4rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:0.7rem 0.9rem;border-radius:8px;font-size:0.88rem;outline:none;font-family:'Inter',sans-serif;transition:border-color 0.2s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent2)}
+.form-group textarea{resize:vertical;min-height:80px}
+.btn-full{width:100%;padding:0.8rem;border-radius:8px;background:var(--accent);color:#fff;border:none;font-weight:600;font-size:0.9rem;cursor:pointer;transition:background 0.2s}
+.btn-full:hover{background:var(--accent2)}
+.admin-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:0.75rem 2rem;z-index:500;align-items:center;gap:1rem}
+.admin-bar.show{display:flex}
+.admin-tab{padding:0.4rem 1rem;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.admin-tab.active,.admin-tab:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.admin-tab-logout{margin-left:auto;color:var(--text3);background:none;border:none;font-size:0.82rem;cursor:pointer}
+.admin-modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);z-index:1500;display:none;align-items:center;justify-content:center}
+.admin-modal.show{display:flex}
+.admin-modal-inner{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem;width:520px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow)}
+.admin-modal-inner h3{font-size:1.2rem;font-weight:800;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center}
+.modal-close{background:none;border:none;color:var(--text3);font-size:1.5rem;cursor:pointer;line-height:1}
+.tags-input{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;min-height:42px;cursor:text}
+.tags-input input{background:none;border:none;color:var(--text);outline:none;font-size:0.85rem;flex:1;min-width:120px;padding:0.1rem 0.25rem}
+.tag-item{background:var(--accent);color:#fff;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.78rem;display:flex;align-items:center;gap:0.3rem}
+.tag-item button{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:0.9rem;line-height:1;padding:0}
+.error-msg{color:#ef4444;font-size:0.8rem;margin-top:0.4rem}
+.success-msg{color:var(--green);font-size:0.8rem;margin-top:0.4rem}
+.delete-btn{background:none;border:1px solid #ef4444;color:#ef4444;padding:0.35rem 0.75rem;border-radius:6px;font-size:0.75rem;cursor:pointer;transition:all 0.2s}
+.delete-btn:hover{background:#ef4444;color:#fff}
+.edit-btn{background:none;border:1px solid var(--accent);color:var(--accent2);padding:0.35rem 0.75rem;border-radius:6px;font-size:0.75rem;cursor:pointer;margin-right:0.4rem;transition:all 0.2s}
+.edit-btn:hover{background:var(--accent);color:#fff}
+
+/* ── FOOTER ── */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text3);font-size:0.82rem}
+footer strong{color:var(--accent2)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  h1{font-size:2rem}
+  .about-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .chat-panel{width:calc(100vw - 2rem);right:1rem}
+  .admin-modal-inner{width:calc(100vw - 2rem)}
+  section{padding:4rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">dev<span>.</span>portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> Open to Opportunities</div>
+      <h1 id="hero-name">Big Data &amp; <span>Automation</span> Engineer</h1>
+      <p class="hero-sub" id="hero-sub">PGDM in Big Data Analytics | Automation & Data Science Engineer | Dashboard Specialist | DevOps Enthusiast</p>
+      <div class="hero-tags" id="hero-tags">
+        <span class="tag">Python</span><span class="tag">Apache Spark</span><span class="tag">Machine Learning</span>
+        <span class="tag">Selenium</span><span class="tag">Power BI</span><span class="tag">Docker</span>
+      </div>
+      <div class="btn-group">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="#" class="btn btn-outline" id="download-resume-btn">Download Resume ↓</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-avatar" id="avatar-initials">AB</div>
+        <h3 id="card-name">Your Name</h3>
+        <p id="card-title">Big Data Analytics | Automation | Data Science</p>
+        <div class="stat-row">
+          <div class="stat"><strong id="stat-projects">—</strong><small>Projects</small></div>
+          <div class="stat"><strong id="stat-certs">—</strong><small>Certifications</small></div>
+          <div class="stat"><strong>2+</strong><small>Years Exp.</small></div>
+          <div class="stat"><strong>3+</strong><small>Domains</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Background &amp; Skills</h2>
+    <div class="about-grid">
+      <div>
+        <div class="about-text" id="about-text">
+          <p>Currently pursuing <strong>PGDM in Big Data Analytics</strong>, bringing hands-on experience across automation engineering, data science, and DevOps domains. Passionate about building data-driven solutions and scalable automation pipelines.</p>
+          <p>I've worked on interactive dashboards, automated testing frameworks, and data science projects that turn raw data into actionable insights. I thrive at the intersection of data and engineering.</p>
+        </div>
+        <div id="experience-section">
+          <div class="section-label" style="margin-top:2rem;margin-bottom:1rem">Experience</div>
+          <div class="exp-timeline" id="exp-timeline">
+            <div class="exp-item">
+              <h4>Automation Engineer</h4>
+              <div class="company">Previous Company</div>
+              <div class="period">2022 — 2023</div>
+              <p>Developed automation frameworks using Selenium, built CI/CD pipelines, and streamlined testing workflows reducing manual effort significantly.</p>
+            </div>
+            <div class="exp-item">
+              <h4>Data Science Engineer</h4>
+              <div class="company">Previous Company</div>
+              <div class="period">2023 — 2024</div>
+              <p>Built ML models, developed interactive dashboards with Power BI and Tableau, and implemented data pipelines using Apache Spark.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label" style="margin-bottom:1rem">Technical Skills</div>
+        <div class="skills-grid" id="skills-grid">
+          <div class="skill-chip">Python</div>
+          <div class="skill-chip">Apache Spark</div>
+          <div class="skill-chip">Machine Learning</div>
+          <div class="skill-chip">Selenium / Automation</div>
+          <div class="skill-chip">Power BI / Tableau</div>
+          <div class="skill-chip">Docker / Kubernetes</div>
+          <div class="skill-chip">MongoDB / SQL</div>
+          <div class="skill-chip">FastAPI / Flask</div>
+          <div class="skill-chip">Hadoop / Hive</div>
+          <div class="skill-chip">Git / CI-CD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">My Work</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-desc">A selection of projects across data engineering, automation, and analytics.</p>
+    <div class="projects-grid" id="projects-grid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading projects...</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" style="background:var(--surface)">
+  <div class="section-inner">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Certifications</h2>
+    <p class="section-desc">Professional certifications and credentials earned across data, cloud, and engineering domains.</p>
+    <div class="certs-grid" id="certs-grid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading certifications...</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Let's Connect</div>
+    <h2 class="section-title">Contact Me</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>Currently open to full-time roles and internship opportunities in Data Engineering, Data Science, Automation, and related fields. Let's build something together!</p>
+        <div class="contact-links" id="contact-links">
+          <a href="mailto:your@email.com" class="contact-link" id="email-link"><span class="contact-link-icon">✉</span> your@email.com</a>
+          <a href="#" class="contact-link" id="linkedin-link" target="_blank"><span class="contact-link-icon">in</span> LinkedIn Profile</a>
+          <a href="#" class="contact-link" id="github-link" target="_blank"><span class="contact-link-icon">⌥</span> GitHub Profile</a>
+          <a href="#" class="contact-link" id="location-link"><span class="contact-link-icon">📍</span> Goa, India</a>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2rem">
+          <h3 style="font-weight:700;margin-bottom:1rem;font-size:1rem">Quick Message via Chatbot</h3>
+          <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1.5rem">Use the AI chatbot (bottom right) to ask anything about my experience, projects, or availability.</p>
+          <button class="btn btn-primary" onclick="openChat()">💬 Ask the AI Assistant</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with ❤️ · Powered by <strong>FastAPI</strong> + <strong>MongoDB</strong> + <strong>ChromaDB</strong> + <strong>Claude AI</strong></p>
+  <p style="margin-top:0.5rem"><button onclick="showAdminLogin()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.8rem">🔐 Admin</button></p>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chat-trigger" onclick="toggleChat()" title="Ask me anything">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div style="flex:1"><h4>Portfolio Assistant</h4><p>● Online — Ask me anything!</p></div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      <div class="msg-bubble">👋 Hi! I'm an AI assistant trained on this portfolio. Ask me about projects, skills, experience, or anything else!</div>
+      <span class="msg-time">Just now</span>
+    </div>
+  </div>
+  <div class="chat-suggestions" id="chatSuggestions">
+    <button class="chat-suggestion" onclick="sendSuggestion(this)">What tech stack do you use?</button>
+    <button class="chat-suggestion" onclick="sendSuggestion(this)">Tell me about your projects</button>
+    <button class="chat-suggestion" onclick="sendSuggestion(this)">What's your experience?</button>
+  </div>
+  <div class="chat-input-area">
+    <input class="chat-input" id="chatInput" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button class="chat-send" id="chatSend" onclick="sendChat()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="admin-login" id="adminLogin">
+  <div class="login-card">
+    <h3>🔐 Admin Login</h3>
+    <p>Access the admin panel to manage your portfolio content.</p>
+    <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="admin@portfolio.com"/></div>
+    <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"/></div>
+    <div class="error-msg" id="loginError" style="display:none"></div>
+    <br/>
+    <button class="btn-full" onclick="doLogin()">Sign In</button>
+    <button onclick="hideAdminLogin()" style="width:100%;margin-top:0.75rem;background:none;border:none;color:var(--text3);font-size:0.85rem;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN BAR -->
+<div class="admin-bar" id="adminBar">
+  <span style="font-size:0.82rem;color:var(--text2);font-weight:600">⚙ Admin Panel</span>
+  <button class="admin-tab active" onclick="openAdminModal('project')">+ Project</button>
+  <button class="admin-tab" onclick="openAdminModal('cert')">+ Certification</button>
+  <button class="admin-tab" onclick="openAdminModal('resume')">✏ Resume</button>
+  <button class="admin-tab-logout" onclick="adminLogout()">Logout ×</button>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="admin-modal" id="adminModal">
+  <div class="admin-modal-inner">
+    <h3 id="modalTitle">Add Project <button class="modal-close" onclick="closeAdminModal()">×</button></h3>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:8000'
+  : 'https://your-backend.onrender.com'; // ← UPDATE AFTER DEPLOY
+
+let adminToken = localStorage.getItem('portfolio_admin_token');
+let chatHistory = [];
+let chatOpen = false;
+let editingId = null;
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  loadResume();
+  loadProjects();
+  loadCertifications();
+  loadChatSuggestions();
+  if (adminToken) showAdminBar();
+});
+
+// ── RESUME ────────────────────────────────────────────────────────────────
+async function loadResume() {
+  try {
+    const res = await fetch(`${API}/api/resume/`);
+    if (!res.ok) return;
+    const data = await res.json();
+    
+    if (data.name) {
+      document.getElementById('hero-name').innerHTML = `${data.name.split(' ')[0]}'s <span>Portfolio</span>`;
+      document.getElementById('hero-sub').textContent = data.summary || '';
+      document.getElementById('card-name').textContent = data.name;
+      document.getElementById('card-title').textContent = data.title;
+      const initials = data.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+      document.getElementById('avatar-initials').textContent = initials;
+      document.title = `${data.name} | Portfolio`;
+      
+      if (data.email) document.getElementById('email-link').innerHTML = `<span class="contact-link-icon">✉</span> ${data.email}`;
+      if (data.email) document.getElementById('email-link').href = `mailto:${data.email}`;
+      if (data.linkedin) { document.getElementById('linkedin-link').href = data.linkedin; document.getElementById('linkedin-link').innerHTML = `<span class="contact-link-icon">in</span> LinkedIn Profile`; }
+      if (data.github) { document.getElementById('github-link').href = data.github; }
+      if (data.location) document.getElementById('location-link').innerHTML = `<span class="contact-link-icon">📍</span> ${data.location}`;
+      if (data.pdf_url) { document.getElementById('download-resume-btn').href = data.pdf_url; document.getElementById('download-resume-btn').target='_blank'; }
+      
+      if (data.skills && data.skills.length) {
+        // Hero tags
+        const heroTags = document.getElementById('hero-tags');
+        heroTags.innerHTML = data.skills.slice(0,8).map(s=>`<span class="tag">${s}</span>`).join('');
+        // Skills grid
+        const sg = document.getElementById('skills-grid');
+        sg.innerHTML = data.skills.map(s=>`<div class="skill-chip">${s}</div>`).join('');
+      }
+      
+      if (data.experiences && data.experiences.length) {
+        const tl = document.getElementById('exp-timeline');
+        tl.innerHTML = data.experiences.map(e=>`
+          <div class="exp-item">
+            <h4>${e.role}</h4>
+            <div class="company">${e.company}</div>
+            <div class="period">${e.start_date} — ${e.end_date || 'Present'}</div>
+            <p>${e.description}</p>
+          </div>`).join('');
+      }
+    }
+  } catch(e) { console.warn('Resume not loaded:', e.message); }
+}
+
+// ── PROJECTS ──────────────────────────────────────────────────────────────
+async function loadProjects() {
+  const grid = document.getElementById('projects-grid');
+  try {
+    const res = await fetch(`${API}/api/projects/`);
+    const projects = await res.json();
+    document.getElementById('stat-projects').textContent = projects.length || '0';
+    
+    if (!projects.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
+        No projects yet. ${adminToken ? 'Click "+ Project" below to add one.' : 'Check back soon!'}</div>`;
+      return;
+    }
+    
+    grid.innerHTML = projects.map(p => `
+      <div class="project-card">
+        <div class="project-img">
+          ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}"/>` : `<span style="font-size:2.5rem">🚀</span>`}
+          ${p.featured ? '<span class="featured-badge">★ Featured</span>' : ''}
+        </div>
+        <div class="project-body">
+          <div class="project-tags">${(p.tech_stack||[]).slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
+          <h3>${p.title}</h3>
+          <p>${p.description}</p>
+          <div class="project-links">
+            ${p.github_url ? `<a href="${p.github_url}" class="project-link" target="_blank">⌥ GitHub</a>` : ''}
+            ${p.live_url ? `<a href="${p.live_url}" class="project-link" target="_blank">↗ Live Demo</a>` : ''}
+            ${adminToken ? `<button class="edit-btn" onclick="editProject('${p.id}')">Edit</button><button class="delete-btn" onclick="deleteProject('${p.id}')">Delete</button>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load projects.</div>`;
+  }
+}
+
+// ── CERTIFICATIONS ────────────────────────────────────────────────────────
+async function loadCertifications() {
+  const grid = document.getElementById('certs-grid');
+  try {
+    const res = await fetch(`${API}/api/certifications/`);
+    const certs = await res.json();
+    document.getElementById('stat-certs').textContent = certs.length || '0';
+    
+    if (!certs.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
+        No certifications yet. ${adminToken ? 'Click "+ Certification" to add.' : 'Check back soon!'}</div>`;
+      return;
+    }
+    
+    grid.innerHTML = certs.map(c => `
+      <div class="cert-card">
+        <div class="cert-issuer">${c.issuer}</div>
+        <div class="cert-title">${c.title}</div>
+        <div class="cert-date">Issued: ${c.issue_date}${c.expiry_date ? ` · Expires: ${c.expiry_date}` : ''}</div>
+        ${c.skills?.length ? `<div class="cert-skills">${c.skills.slice(0,5).map(s=>`<span class="cert-skill">${s}</span>`).join('')}</div>` : ''}
+        ${c.credential_url ? `<a href="${c.credential_url}" class="cert-link" target="_blank">🔗 View Credential</a>` : ''}
+        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editCert('${c.id}')">Edit</button><button class="delete-btn" onclick="deleteCert('${c.id}')">Delete</button></div>` : ''}
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load certifications.</div>`;
+  }
+}
+
+// ── CHATBOT ───────────────────────────────────────────────────────────────
+async function loadChatSuggestions() {
+  try {
+    const res = await fetch(`${API}/api/chat/suggestions`);
+    const data = await res.json();
+    const container = document.getElementById('chatSuggestions');
+    container.innerHTML = data.suggestions.slice(0,4).map(s=>`<button class="chat-suggestion" onclick="sendSuggestion(this)">${s}</button>`).join('');
+  } catch(e) {}
+}
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatPanel').classList.toggle('open', chatOpen);
+  if (chatOpen) setTimeout(()=>document.getElementById('chatInput').focus(), 300);
+}
+function openChat() { chatOpen = false; toggleChat(); }
+
+function sendSuggestion(btn) {
+  document.getElementById('chatInput').value = btn.textContent;
+  document.getElementById('chatSuggestions').style.display = 'none';
+  sendChat();
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  addMessage('user', msg);
+  input.value = '';
+  document.getElementById('chatSend').disabled = true;
+  
+  const typingId = addTyping();
+  
+  try {
+    const res = await fetch(`${API}/api/chat/`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ message: msg, history: chatHistory.slice(-6) })
+    });
+    const data = await res.json();
+    removeTyping(typingId);
+    addMessage('bot', data.reply);
+    chatHistory.push({role:'user', content: msg});
+    chatHistory.push({role:'assistant', content: data.reply});
+  } catch(e) {
+    removeTyping(typingId);
+    addMessage('bot', 'Sorry, I had trouble connecting. Please try again!');
+  }
+  document.getElementById('chatSend').disabled = false;
+}
+
+function addMessage(role, text) {
+  const messages = document.getElementById('chatMessages');
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  div.innerHTML = `<div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div><span class="msg-time">${time}</span>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  return div;
+}
+
+function addTyping() {
+  const messages = document.getElementById('chatMessages');
+  const id = 'typing_' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'msg bot'; div.id = id;
+  div.innerHTML = `<div class="msg-bubble"><div class="typing-dot"><span></span><span></span><span></span></div></div>`;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  return id;
+}
+function removeTyping(id) { const el = document.getElementById(id); if(el) el.remove(); }
+
+// ── ADMIN AUTH ────────────────────────────────────────────────────────────
+function showAdminLogin() { document.getElementById('adminLogin').classList.add('show'); }
+function hideAdminLogin() { document.getElementById('adminLogin').classList.remove('show'); }
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginError');
+  err.style.display = 'none';
+  
+  try {
+    const res = await fetch(`${API}/api/auth/login`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email, password: pass})
+    });
+    const data = await res.json();
+    if (!res.ok) { err.textContent = data.detail || 'Login failed'; err.style.display='block'; return; }
+    adminToken = data.access_token;
+    localStorage.setItem('portfolio_admin_token', adminToken);
+    hideAdminLogin();
+    showAdminBar();
+    loadProjects(); loadCertifications();
+  } catch(e) { err.textContent = 'Connection error'; err.style.display='block'; }
+}
+
+function showAdminBar() { document.getElementById('adminBar').classList.add('show'); }
+
+function adminLogout() {
+  adminToken = null;
+  localStorage.removeItem('portfolio_admin_token');
+  document.getElementById('adminBar').classList.remove('show');
+  loadProjects(); loadCertifications();
+}
+
+// ── ADMIN MODAL ───────────────────────────────────────────────────────────
+function openAdminModal(type) {
+  editingId = null;
+  const modal = document.getElementById('adminModal');
+  const title = document.getElementById('modalTitle');
+  const body  = document.getElementById('modalBody');
+  
+  if (type === 'project') {
+    title.innerHTML = 'Add Project <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = projectForm();
+  } else if (type === 'cert') {
+    title.innerHTML = 'Add Certification <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = certForm();
+  } else if (type === 'resume') {
+    title.innerHTML = 'Update Resume <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = resumeForm();
+    loadResumeIntoForm();
+  }
+  modal.classList.add('show');
+  initTagsInput();
+}
+
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.remove('show');
+  editingId = null;
+}
+
+function projectForm(data={}) {
+  return `
+    <div class="form-group"><label>Project Title *</label><input id="pTitle" value="${data.title||''}" placeholder="e.g. Real-time Analytics Dashboard"/></div>
+    <div class="form-group"><label>Short Description *</label><input id="pDesc" value="${data.description||''}" placeholder="What does this project do?"/></div>
+    <div class="form-group"><label>Detailed Description</label><textarea id="pLong" placeholder="Detailed explanation...">${data.long_description||''}</textarea></div>
+    <div class="form-group"><label>Tech Stack (press Enter to add)</label><div class="tags-input" id="techInput"><input id="techRaw" placeholder="Python, Spark, ..."/></div></div>
+    <div class="form-group"><label>Tags (press Enter to add)</label><div class="tags-input" id="tagsInput"><input id="tagsRaw" placeholder="analytics, ml, ..."/></div></div>
+    <div class="form-group"><label>GitHub URL</label><input id="pGithub" value="${data.github_url||''}" placeholder="https://github.com/..."/></div>
+    <div class="form-group"><label>Live URL</label><input id="pLive" value="${data.live_url||''}" placeholder="https://..."/></div>
+    <div class="form-group"><label><input type="checkbox" id="pFeatured" ${data.featured?'checked':''}/> Featured project</label></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveProject()">${editingId?'Update':'Save'} Project</button>
+    ${editingId ? `<div style="margin-top:1rem"><label style="font-size:0.8rem;color:var(--text2)">Upload Image</label><input type="file" id="pImage" accept="image/*" style="margin-top:0.4rem;color:var(--text2);font-size:0.82rem"/><button onclick="uploadProjectImage()" style="margin-top:0.5rem;width:100%;padding:0.6rem;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;cursor:pointer">Upload Image</button></div>` : ''}`;
+}
+
+function certForm(data={}) {
+  return `
+    <div class="form-group"><label>Certificate Title *</label><input id="cTitle" value="${data.title||''}" placeholder="e.g. AWS Certified Solutions Architect"/></div>
+    <div class="form-group"><label>Issuer *</label><input id="cIssuer" value="${data.issuer||''}" placeholder="e.g. Amazon Web Services"/></div>
+    <div class="form-group"><label>Issue Date *</label><input id="cIssueDate" value="${data.issue_date||''}" placeholder="2024-03"/></div>
+    <div class="form-group"><label>Expiry Date</label><input id="cExpiry" value="${data.expiry_date||''}" placeholder="2027-03 (leave blank if no expiry)"/></div>
+    <div class="form-group"><label>Credential URL</label><input id="cUrl" value="${data.credential_url||''}" placeholder="https://..."/></div>
+    <div class="form-group"><label>Credential ID</label><input id="cId" value="${data.credential_id||''}" placeholder="ABC123"/></div>
+    <div class="form-group"><label>Skills (press Enter to add)</label><div class="tags-input" id="skillsInput"><input id="skillsRaw" placeholder="Machine Learning, Python, ..."/></div></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveCert()">${editingId?'Update':'Save'} Certification</button>`;
+}
+
+function resumeForm() {
+  return `
+    <div class="form-group"><label>Full Name *</label><input id="rName" placeholder="Your Full Name"/></div>
+    <div class="form-group"><label>Title/Role *</label><input id="rTitle" placeholder="Big Data Analytics | Automation Engineer"/></div>
+    <div class="form-group"><label>Professional Summary *</label><textarea id="rSummary" placeholder="Brief professional summary..."></textarea></div>
+    <div class="form-group"><label>Email</label><input id="rEmail" placeholder="your@email.com"/></div>
+    <div class="form-group"><label>Phone</label><input id="rPhone" placeholder="+91 ..."/></div>
+    <div class="form-group"><label>Location</label><input id="rLocation" placeholder="Goa, India"/></div>
+    <div class="form-group"><label>LinkedIn URL</label><input id="rLinkedin" placeholder="https://linkedin.com/in/..."/></div>
+    <div class="form-group"><label>GitHub URL</label><input id="rGithub" placeholder="https://github.com/..."/></div>
+    <div class="form-group"><label>Skills (press Enter to add)</label><div class="tags-input" id="resumeSkillsInput"><input id="resumeSkillsRaw" placeholder="Python, Spark, ..."/></div></div>
+    <div class="form-group"><label>Upload PDF Resume</label><input type="file" id="rPdf" accept=".pdf" style="color:var(--text2);font-size:0.82rem"/><button onclick="uploadResumePdf()" style="margin-top:0.5rem;width:100%;padding:0.6rem;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;cursor:pointer">Upload PDF</button></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveResume()">Save Resume</button>`;
+}
+
+// Tags input system
+let tagStores = {};
+function initTagsInput() {
+  tagStores = {};
+  ['techInput','tagsInput','skillsInput','resumeSkillsInput'].forEach(id => {
+    const container = document.getElementById(id);
+    if (!container) return;
+    const rawInput = container.querySelector('input');
+    tagStores[id] = [];
+    rawInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const val = rawInput.value.trim().replace(/,$/,'');
+        if (val && !tagStores[id].includes(val)) {
+          tagStores[id].push(val);
+          renderTag(id, val);
+          rawInput.value = '';
+        }
+      }
+    });
+  });
+}
+
+function renderTag(containerId, val) {
+  const container = document.getElementById(containerId);
+  const rawInput = container.querySelector('input');
+  const tag = document.createElement('span');
+  tag.className = 'tag-item';
+  tag.innerHTML = `${val}<button onclick="removeTag('${containerId}','${val}',this)">×</button>`;
+  container.insertBefore(tag, rawInput);
+}
+
+function removeTag(containerId, val, btn) {
+  tagStores[containerId] = tagStores[containerId].filter(t=>t!==val);
+  btn.parentElement.remove();
+}
+
+function getTags(containerId) { return tagStores[containerId] || []; }
+
+async function saveProject() {
+  const payload = {
+    title: document.getElementById('pTitle').value,
+    description: document.getElementById('pDesc').value,
+    long_description: document.getElementById('pLong').value,
+    tech_stack: getTags('techInput'),
+    tags: getTags('tagsInput'),
+    github_url: document.getElementById('pGithub').value,
+    live_url: document.getElementById('pLive').value,
+    featured: document.getElementById('pFeatured').checked
+  };
+  
+  const url = editingId ? `${API}/api/projects/${editingId}` : `${API}/api/projects/`;
+  const method = editingId ? 'PUT' : 'POST';
+  
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Project saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadProjects(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
+async function saveCert() {
+  const payload = {
+    title: document.getElementById('cTitle').value,
+    issuer: document.getElementById('cIssuer').value,
+    issue_date: document.getElementById('cIssueDate').value,
+    expiry_date: document.getElementById('cExpiry').value || null,
+    credential_url: document.getElementById('cUrl').value,
+    credential_id: document.getElementById('cId').value,
+    skills: getTags('skillsInput')
+  };
+  
+  const url = editingId ? `${API}/api/certifications/${editingId}` : `${API}/api/certifications/`;
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadCertifications(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
+async function loadResumeIntoForm() {
+  try {
+    const res = await fetch(`${API}/api/resume/`);
+    if (!res.ok) return;
+    const data = await res.json();
+    document.getElementById('rName').value = data.name || '';
+    document.getElementById('rTitle').value = data.title || '';
+    document.getElementById('rSummary').value = data.summary || '';
+    document.getElementById('rEmail').value = data.email || '';
+    document.getElementById('rPhone').value = data.phone || '';
+    document.getElementById('rLocation').value = data.location || '';
+    document.getElementById('rLinkedin').value = data.linkedin || '';
+    document.getElementById('rGithub').value = data.github || '';
+    if (data.skills) { tagStores['resumeSkillsInput'] = []; data.skills.forEach(s=>{ if(!tagStores['resumeSkillsInput']) tagStores['resumeSkillsInput']=[]; tagStores['resumeSkillsInput'].push(s); renderTag('resumeSkillsInput', s); }); }
+  } catch(e) {}
+}
+
+async function saveResume() {
+  const payload = {
+    name: document.getElementById('rName').value,
+    title: document.getElementById('rTitle').value,
+    summary: document.getElementById('rSummary').value,
+    email: document.getElementById('rEmail').value,
+    phone: document.getElementById('rPhone').value,
+    location: document.getElementById('rLocation').value,
+    linkedin: document.getElementById('rLinkedin').value,
+    github: document.getElementById('rGithub').value,
+    skills: getTags('resumeSkillsInput'),
+    experiences: [], education: []
+  };
+  const res = await fetch(`${API}/api/resume/`, {
+    method:'PUT', headers:{'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent='✓ Resume saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadResume(); }, 1200);
+  } else { msg.className='error-msg'; msg.textContent=data.detail||'Error'; msg.style.display='block'; }
+}
+
+async function uploadResumePdf() {
+  const file = document.getElementById('rPdf').files[0];
+  if (!file) return;
+  const form = new FormData(); form.append('file', file);
+  const res = await fetch(`${API}/api/resume/upload-pdf`, {method:'POST', headers:{'Authorization':`Bearer ${adminToken}`}, body:form});
+  const data = await res.json();
+  if (res.ok) alert('✓ PDF uploaded: ' + data.pdf_url);
+  else alert('Upload failed');
+}
+
+async function uploadProjectImage() {
+  const file = document.getElementById('pImage').files[0];
+  if (!file || !editingId) return;
+  const form = new FormData(); form.append('file', file);
+  const res = await fetch(`${API}/api/projects/${editingId}/image`, {method:'POST', headers:{'Authorization':`Bearer ${adminToken}`}, body:form});
+  const data = await res.json();
+  if (res.ok) alert('✓ Image uploaded');
+  else alert('Upload failed');
+}
+
+async function editProject(id) {
+  const res = await fetch(`${API}/api/projects/?`);
+  const all = await res.json();
+  const p = all.find(x=>x.id===id);
+  if (!p) return;
+  editingId = id;
+  const title = document.getElementById('modalTitle');
+  const body  = document.getElementById('modalBody');
+  title.innerHTML = 'Edit Project <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  body.innerHTML = projectForm(p);
+  initTagsInput();
+  (p.tech_stack||[]).forEach(t=>{ tagStores['techInput'].push(t); renderTag('techInput',t); });
+  (p.tags||[]).forEach(t=>{ tagStores['tagsInput'].push(t); renderTag('tagsInput',t); });
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deleteProject(id) {
+  if (!confirm('Delete this project?')) return;
+  await fetch(`${API}/api/projects/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadProjects();
+}
+
+async function editCert(id) {
+  const res = await fetch(`${API}/api/certifications/`);
+  const all = await res.json();
+  const c = all.find(x=>x.id===id);
+  if (!c) return;
+  editingId = id;
+  document.getElementById('modalTitle').innerHTML = 'Edit Certification <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  document.getElementById('modalBody').innerHTML = certForm(c);
+  initTagsInput();
+  (c.skills||[]).forEach(s=>{ tagStores['skillsInput'].push(s); renderTag('skillsInput',s); });
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deleteCert(id) {
+  if (!confirm('Delete this certification?')) return;
+  await fetch(`${API}/api/certifications/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadCertifications();
+}
+
+function toggleMobile() {
+  const links = document.querySelector('.nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+  links.style.flexDirection = 'column';
+  links.style.position = 'absolute';
+  links.style.top = '64px'; links.style.left='0'; links.style.right='0';
+  links.style.background='var(--surface)'; links.style.padding='1rem 2rem';
+  links.style.borderBottom='1px solid var(--border)';
+}
+</script>
+</body>
+</html>

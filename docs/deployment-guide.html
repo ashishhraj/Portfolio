@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio Deployment Guide</title>
+<style>
+:root{--bg:#0a0f1e;--s:#111827;--s2:#1a2236;--b:#1e2d4a;--a:#2563eb;--a2:#3b82f6;--g:#10b981;--gold:#f59e0b;--r:#ef4444;--t:#e2e8f0;--t2:#94a3b8;--t3:#64748b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;padding-bottom:4rem}
+header{background:linear-gradient(135deg,#0a0f1e,#1a2236);border-bottom:1px solid var(--b);padding:2.5rem 2rem;text-align:center}
+header h1{font-size:2rem;font-weight:800;letter-spacing:-1px;margin-bottom:.5rem}
+header h1 span{color:var(--a2)}
+header p{color:var(--t2);font-size:1rem}
+.progress-bar{display:flex;gap:0;overflow:hidden;border-radius:0;border-bottom:1px solid var(--b);background:var(--s)}
+.pb-step{flex:1;padding:.7rem .5rem;text-align:center;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;border-right:1px solid var(--b);color:var(--t3);letter-spacing:.3px}
+.pb-step:last-child{border-right:none}
+.pb-step.active{background:var(--a);color:#fff}
+.pb-step.done{background:rgba(16,185,129,.15);color:var(--g)}
+.pb-step:hover:not(.active){background:var(--s2);color:var(--t)}
+main{max-width:860px;margin:0 auto;padding:2rem}
+.step-panel{display:none}
+.step-panel.active{display:block}
+.step-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--b)}
+.step-num{width:48px;height:48px;background:var(--a);border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex-shrink:0}
+.step-header h2{font-size:1.5rem;font-weight:800}
+.step-header p{color:var(--t2);font-size:.9rem}
+.time-badge{margin-left:auto;background:rgba(245,158,11,.12);color:var(--gold);border:1px solid rgba(245,158,11,.3);padding:.3rem .8rem;border-radius:20px;font-size:.75rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;position:relative}
+.card h3{font-size:1rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.card h3 .icon{width:28px;height:28px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.card p,.card li{color:var(--t2);font-size:.88rem;line-height:1.7}
+.card ul,.card ol{padding-left:1.2rem}
+.card li{margin-bottom:.3rem}
+.card li strong{color:var(--t)}
+.accent-bar{position:absolute;top:0;left:0;bottom:0;width:4px;border-radius:12px 0 0 12px}
+code{background:var(--s2);border:1px solid var(--b);padding:.15rem .45rem;border-radius:5px;font-family:'JetBrains Mono','Courier New',monospace;font-size:.82rem;color:#93c5fd}
+pre{background:#070d1a;border:1px solid var(--b);border-radius:10px;padding:1.25rem;overflow-x:auto;margin:.75rem 0;position:relative}
+pre code{background:none;border:none;padding:0;font-size:.83rem;color:#a5d6a7;line-height:1.65}
+.copy-btn{position:absolute;top:.6rem;right:.6rem;background:var(--s2);border:1px solid var(--b);color:var(--t3);padding:.25rem .65rem;border-radius:6px;font-size:.72rem;cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:var(--a);color:#fff;border-color:var(--a)}
+.copy-btn.copied{background:rgba(16,185,129,.2);color:var(--g);border-color:var(--g)}
+.note{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.25);border-radius:10px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.86rem;color:#93c5fd}
+.note strong{color:#60a5fa}
+.warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.86rem;color:#fcd34d}
+.warn strong{color:var(--gold)}
+.success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:1rem 1.25rem;margin:.75rem 0;font-size:.86rem;color:#6ee7b7}
+.success strong{color:var(--g)}
+.env-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.84rem}
+.env-table th{background:var(--s2);padding:.6rem .9rem;text-align:left;font-size:.75rem;letter-spacing:.5px;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--b)}
+.env-table td{padding:.6rem .9rem;border-bottom:1px solid rgba(30,45,74,.5);vertical-align:top}
+.env-table td:first-child{font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:.8rem;white-space:nowrap}
+.env-table td:last-child{color:var(--t2)}
+.env-table tr:last-child td{border-bottom:none}
+.link-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--a);color:#fff;padding:.5rem 1rem;border-radius:8px;font-size:.82rem;font-weight:600;text-decoration:none;transition:background .2s;margin:.3rem .3rem .3rem 0}
+.link-btn:hover{background:var(--a2)}
+.link-btn.green{background:rgba(16,185,129,.2);color:var(--g);border:1px solid rgba(16,185,129,.3)}
+.link-btn.green:hover{background:var(--g);color:#000}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.nav-btns{display:flex;justify-content:space-between;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--b)}
+.nav-btn{padding:.7rem 1.5rem;border-radius:10px;font-weight:700;cursor:pointer;border:none;font-size:.9rem;transition:all .2s}
+.nav-prev{background:var(--s2);color:var(--t2)}
+.nav-prev:hover{background:var(--b);color:var(--t)}
+.nav-next{background:var(--a);color:#fff}
+.nav-next:hover{background:var(--a2);transform:translateY(-1px)}
+.check-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem 0;border-bottom:1px solid rgba(30,45,74,.4)}
+.check-item:last-child{border-bottom:none}
+.check-item input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--g);cursor:pointer;flex-shrink:0}
+.check-item label{font-size:.88rem;color:var(--t2);cursor:pointer}
+.check-item label strong{color:var(--t)}
+.badge{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700;font-family:monospace}
+.badge.free{background:rgba(16,185,129,.15);color:var(--g);border:1px solid rgba(16,185,129,.25)}
+.badge.req{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.trouble-item{border:1px solid var(--b);border-radius:10px;overflow:hidden;margin-bottom:.75rem}
+.trouble-q{background:var(--s2);padding:.8rem 1.1rem;font-weight:700;font-size:.88rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.trouble-q:hover{background:var(--b)}
+.trouble-a{display:none;padding:1rem 1.1rem;font-size:.86rem;color:var(--t2);line-height:1.7;background:var(--s)}
+.trouble-a.open{display:block}
+.arch-row{display:flex;align-items:center;gap:.75rem;padding:.75rem;background:var(--s2);border-radius:10px;margin-bottom:.5rem;border:1px solid var(--b)}
+.arch-row .arch-icon{font-size:1.3rem;width:36px;text-align:center}
+.arch-row .arch-info strong{display:block;font-size:.88rem;font-weight:700}
+.arch-row .arch-info span{font-size:.78rem;color:var(--t3)}
+.arch-row .arch-arrow{margin-left:auto;color:var(--t3);font-size:.9rem}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}.pb-step{font-size:.62rem;padding:.5rem .25rem}.time-badge{display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚀 Portfolio Deployment <span>Step-by-Step</span></h1>
+  <p>Full guide to go from code → live website using Groq AI (free) · Render · MongoDB Atlas</p>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar">
+  <div class="pb-step active" onclick="goStep(0)">1. Accounts</div>
+  <div class="pb-step" onclick="goStep(1)">2. Local Setup</div>
+  <div class="pb-step" onclick="goStep(2)">3. GitHub</div>
+  <div class="pb-step" onclick="goStep(3)">4. Backend</div>
+  <div class="pb-step" onclick="goStep(4)">5. Frontend</div>
+  <div class="pb-step" onclick="goStep(5)">6. Admin Panel</div>
+  <div class="pb-step" onclick="goStep(6)">7. Troubleshoot</div>
+</div>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 0 — ACCOUNTS
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel active" id="step-0">
+  <div class="step-header">
+    <div class="step-num">1</div>
+    <div><h2>Create Free Accounts</h2><p>You need 5 services — all have free tiers</p></div>
+    <div class="time-badge">⏱ ~20 mins</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3><span class="icon" style="background:rgba(16,185,129,.15)">🍃</span> MongoDB Atlas — Your Database <span class="badge free">FREE</span></h3>
+    <ol>
+      <li>Go to <a href="https://www.mongodb.com/cloud/atlas/register" target="_blank" style="color:var(--a2)">mongodb.com/cloud/atlas/register</a></li>
+      <li>Sign up with Google or email → Choose <strong>Free M0 tier</strong></li>
+      <li>Select region: <strong>Mumbai ap-south-1</strong> (closest to Goa, India)</li>
+      <li>Set a username + password → remember these!</li>
+      <li>After cluster creates → click <strong>Connect</strong> → <strong>Drivers</strong> → copy the connection string</li>
+      <li>It looks like: <code>mongodb+srv://myuser:mypass@cluster0.xxxxx.mongodb.net/</code></li>
+    </ol>
+    <div class="warn"><strong>⚠ Critical:</strong> Go to <strong>Network Access</strong> → click <strong>Add IP Address</strong> → click <strong>"Allow Access from Anywhere"</strong> → Confirm. Without this, Render can't connect!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:#f97316"></div>
+    <h3><span class="icon" style="background:rgba(249,115,22,.15)">☁</span> Cloudinary — Image & PDF Storage <span class="badge free">FREE</span></h3>
+    <ol>
+      <li>Go to <a href="https://cloudinary.com/users/register/free" target="_blank" style="color:var(--a2)">cloudinary.com/users/register/free</a></li>
+      <li>Sign up → verify email</li>
+      <li>Go to Dashboard → copy these 3 values:</li>
+    </ol>
+    <div class="two-col" style="margin-top:.75rem">
+      <div style="background:var(--s2);border-radius:8px;padding:.75rem;font-size:.83rem">🔷 <strong>Cloud Name</strong><br/><span style="color:var(--t3)">e.g. <code>dxyz1234</code></span></div>
+      <div style="background:var(--s2);border-radius:8px;padding:.75rem;font-size:.83rem">🔑 <strong>API Key</strong><br/><span style="color:var(--t3)">e.g. <code>123456789012345</code></span></div>
+    </div>
+    <div style="background:var(--s2);border-radius:8px;padding:.75rem;font-size:.83rem;margin-top:.5rem">🔒 <strong>API Secret</strong> — click "Reveal" to see it</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:#f59e0b"></div>
+    <h3><span class="icon" style="background:rgba(245,158,11,.15)">⚡</span> Groq — AI API (FREE, fast!) <span class="badge free">FREE</span></h3>
+    <ol>
+      <li>Go to <a href="https://console.groq.com" target="_blank" style="color:var(--a2)">console.groq.com</a></li>
+      <li>Sign up with Google</li>
+      <li>Go to <strong>API Keys</strong> → <strong>Create API Key</strong></li>
+      <li>Name it "portfolio" → copy the key</li>
+      <li>Starts with: <code>gsk_...</code></li>
+    </ol>
+    <div class="success"><strong>✓ Groq is 100% free</strong> — uses <code>llama-3.3-70b-versatile</code> with generous rate limits. No credit card needed!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3><span class="icon" style="background:rgba(59,130,246,.15)">▲</span> Render — Hosting <span class="badge free">FREE</span></h3>
+    <ol>
+      <li>Go to <a href="https://render.com" target="_blank" style="color:var(--a2)">render.com</a></li>
+      <li><strong>Sign up with GitHub</strong> (important — makes deploy easier)</li>
+      <li>You'll come back here in Step 4</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--t3)"></div>
+    <h3><span class="icon" style="background:rgba(100,116,139,.15)">🐙</span> GitHub — Code Repository <span class="badge free">FREE</span></h3>
+    <ol>
+      <li>Go to <a href="https://github.com" target="_blank" style="color:var(--a2)">github.com</a></li>
+      <li>Sign up if you don't have an account</li>
+      <li>You'll use this in Step 3</li>
+    </ol>
+  </div>
+
+  <div class="success" style="margin-top:1.5rem">
+    <strong>✅ Accounts checklist:</strong>
+    <div class="check-item"><input type="checkbox" id="c1"/><label for="c1"><strong>MongoDB Atlas</strong> — cluster created, connection string copied, IP whitelist set to 0.0.0.0/0</label></div>
+    <div class="check-item"><input type="checkbox" id="c2"/><label for="c2"><strong>Cloudinary</strong> — Cloud Name, API Key, API Secret copied</label></div>
+    <div class="check-item"><input type="checkbox" id="c3"/><label for="c3"><strong>Groq</strong> — API key copied (starts with gsk_...)</label></div>
+    <div class="check-item"><input type="checkbox" id="c4"/><label for="c4"><strong>Render</strong> — signed up with GitHub</label></div>
+    <div class="check-item"><input type="checkbox" id="c5"/><label for="c5"><strong>GitHub</strong> — account ready</label></div>
+  </div>
+
+  <div class="nav-btns"><div></div><button class="nav-btn nav-next" onclick="goStep(1)">Next: Local Setup →</button></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 1 — LOCAL SETUP
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-1">
+  <div class="step-header">
+    <div class="step-num">2</div>
+    <div><h2>Local Setup</h2><p>Install tools and configure your .env file on your computer</p></div>
+    <div class="time-badge">⏱ ~15 mins</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>📦 Install Required Tools</h3>
+    <p style="margin-bottom:.75rem">Check if Python and Git are installed:</p>
+    <pre><code>python --version
+# Should show Python 3.11 or higher
+
+git --version
+# Should show git version 2.x</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <p style="margin-top:.75rem">If not installed:</p>
+    <div class="two-col">
+      <a href="https://www.python.org/downloads/" target="_blank" class="link-btn">⬇ Download Python 3.11+</a>
+      <a href="https://git-scm.com/downloads" target="_blank" class="link-btn">⬇ Download Git</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>📂 Extract and Set Up Backend</h3>
+    <p style="margin-bottom:.75rem">After extracting the portfolio.zip you downloaded:</p>
+    <pre><code># Go into backend folder
+cd portfolio/backend
+
+# Create a virtual environment (isolates packages)
+python -m venv venv
+
+# Activate it — Windows:
+venv\Scripts\activate
+
+# Activate it — Mac/Linux:
+source venv/bin/activate
+
+# You should see (venv) at start of your terminal line
+
+# Install all packages
+pip install -r requirements.txt
+
+# This will take 2-3 minutes (downloading packages)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--gold)"></div>
+    <h3>🔐 Create Your .env File</h3>
+    <p style="margin-bottom:.75rem">In the <code>portfolio/backend/</code> folder, create a file called <code>.env</code> (no extension):</p>
+    <pre><code># Windows — in Command Prompt (not PowerShell):
+copy .env.example .env
+notepad .env
+
+# Mac/Linux:
+cp .env.example .env
+nano .env</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <p style="margin:.75rem 0 .5rem">Fill in these values in the .env file:</p>
+    <table class="env-table">
+      <tr><th>Variable</th><th>Where to get it</th></tr>
+      <tr><td>MONGO_URL</td><td>MongoDB Atlas → Connect → Drivers → copy string, replace &lt;password&gt;</td></tr>
+      <tr><td>DB_NAME</td><td>Keep as <code>portfolio</code></td></tr>
+      <tr><td>JWT_SECRET</td><td>Any random string, min 32 chars e.g. <code>myPortfolio2024SecretKey@#$!xyz789</code></td></tr>
+      <tr><td>ADMIN_EMAIL</td><td>Your email (you'll use this to log in as admin)</td></tr>
+      <tr><td>ADMIN_PASSWORD</td><td>A strong password you'll remember</td></tr>
+      <tr><td>GROQ_API_KEY</td><td>From console.groq.com → API Keys (starts with gsk_...)</td></tr>
+      <tr><td>CLOUDINARY_CLOUD_NAME</td><td>From Cloudinary dashboard</td></tr>
+      <tr><td>CLOUDINARY_API_KEY</td><td>From Cloudinary dashboard</td></tr>
+      <tr><td>CLOUDINARY_API_SECRET</td><td>From Cloudinary dashboard</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>🧪 Test Locally</h3>
+    <pre><code># Make sure you're in portfolio/backend/ with venv active
+uvicorn main:app --reload --port 8000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <p style="margin:.75rem 0">Open your browser and test these URLs:</p>
+    <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+      <div style="background:var(--s2);border-radius:8px;padding:.7rem 1rem;font-size:.85rem;display:flex;justify-content:space-between;align-items:center">
+        <span><code>http://localhost:8000</code></span>
+        <span style="color:var(--g);font-size:.78rem">→ Should show: API is running 🚀</span>
+      </div>
+      <div style="background:var(--s2);border-radius:8px;padding:.7rem 1rem;font-size:.85rem;display:flex;justify-content:space-between;align-items:center">
+        <span><code>http://localhost:8000/docs</code></span>
+        <span style="color:var(--g);font-size:.78rem">→ Interactive API docs (Swagger UI)</span>
+      </div>
+      <div style="background:var(--s2);border-radius:8px;padding:.7rem 1rem;font-size:.85rem;display:flex;justify-content:space-between;align-items:center">
+        <span><code>http://localhost:8000/health</code></span>
+        <span style="color:var(--g);font-size:.78rem">→ Should show: {"status":"ok"}</span>
+      </div>
+    </div>
+    <div class="note" style="margin-top:1rem"><strong>💡 Test the frontend:</strong> Just open <code>portfolio/frontend/index.html</code> in Chrome/Firefox. The site will load with empty projects (normal — you haven't added any yet).</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(0)">← Back</button>
+    <button class="nav-btn nav-next" onclick="goStep(2)">Next: Push to GitHub →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 2 — GITHUB
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-2">
+  <div class="step-header">
+    <div class="step-num">3</div>
+    <div><h2>Push Code to GitHub</h2><p>Render deploys directly from GitHub — one push = auto deploy</p></div>
+    <div class="time-badge">⏱ ~10 mins</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--t3)"></div>
+    <h3>1️⃣ Create a New GitHub Repository</h3>
+    <ol>
+      <li>Go to <a href="https://github.com/new" target="_blank" style="color:var(--a2)">github.com/new</a></li>
+      <li>Repository name: <code>my-portfolio</code></li>
+      <li>Set to <strong>Public</strong> (required for free Render)</li>
+      <li>Do NOT check "Add README" or any other options</li>
+      <li>Click <strong>Create repository</strong></li>
+      <li>Copy the repo URL — looks like <code>https://github.com/YOUR_USERNAME/my-portfolio.git</code></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>2️⃣ Initialize Git and Push</h3>
+    <p style="margin-bottom:.75rem">From the <code>portfolio/</code> root folder (not inside backend):</p>
+    <pre><code># Initialize git
+git init
+
+# Stage all files
+git add .
+
+# Create first commit
+git commit -m "Initial portfolio commit"
+
+# Connect to your GitHub repo (replace YOUR_USERNAME)
+git remote add origin https://github.com/YOUR_USERNAME/my-portfolio.git
+
+# Push to GitHub
+git branch -M main
+git push -u origin main</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <div class="warn"><strong>⚠ Important:</strong> The <code>.gitignore</code> file already excludes your <code>.env</code> file and <code>venv/</code> folder. Never commit your .env — it contains secrets!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>3️⃣ Verify on GitHub</h3>
+    <p>Go to <code>github.com/YOUR_USERNAME/my-portfolio</code> — you should see all your files. Check that <code>.env</code> is <strong>NOT</strong> listed (good — it's secret).</p>
+    <div class="success" style="margin-top:.75rem">✅ If you see <code>backend/</code>, <code>frontend/</code>, <code>docs/</code> folders — you're ready to deploy!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(1)">← Back</button>
+    <button class="nav-btn nav-next" onclick="goStep(3)">Next: Deploy Backend →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 3 — BACKEND DEPLOY
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-3">
+  <div class="step-header">
+    <div class="step-num">4</div>
+    <div><h2>Deploy Backend on Render</h2><p>Your FastAPI + Groq + ChromaDB server goes live</p></div>
+    <div class="time-badge">⏱ ~15 mins</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>▲ Create Web Service on Render</h3>
+    <ol>
+      <li>Go to <a href="https://dashboard.render.com" target="_blank" style="color:var(--a2)">dashboard.render.com</a></li>
+      <li>Click <strong>"New +"</strong> → <strong>"Web Service"</strong></li>
+      <li>Click <strong>"Connect a repository"</strong> → select <code>my-portfolio</code></li>
+      <li>Fill in the settings exactly as below:</li>
+    </ol>
+    <table class="env-table" style="margin-top:.75rem">
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Name</td><td><code>portfolio-backend</code></td></tr>
+      <tr><td>Region</td><td>Singapore (closest to India)</td></tr>
+      <tr><td>Root Directory</td><td><code>backend</code></td></tr>
+      <tr><td>Environment</td><td>Python 3</td></tr>
+      <tr><td>Build Command</td><td><code>pip install -r requirements.txt</code></td></tr>
+      <tr><td>Start Command</td><td><code>uvicorn main:app --host 0.0.0.0 --port $PORT</code></td></tr>
+      <tr><td>Instance Type</td><td>Free</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--gold)"></div>
+    <h3>🔐 Add Environment Variables</h3>
+    <p style="margin-bottom:.75rem">Scroll down to <strong>"Environment Variables"</strong> section. Add each one:</p>
+    <table class="env-table">
+      <tr><th>Key</th><th>Value (your actual values)</th></tr>
+      <tr><td>MONGO_URL</td><td>Your full mongodb+srv://... connection string</td></tr>
+      <tr><td>DB_NAME</td><td><code>portfolio</code></td></tr>
+      <tr><td>JWT_SECRET</td><td>Your random secret string (min 32 chars)</td></tr>
+      <tr><td>ADMIN_EMAIL</td><td>your@email.com</td></tr>
+      <tr><td>ADMIN_PASSWORD</td><td>your strong password</td></tr>
+      <tr><td>GROQ_API_KEY</td><td>gsk_... (from console.groq.com)</td></tr>
+      <tr><td>CLOUDINARY_CLOUD_NAME</td><td>your cloud name</td></tr>
+      <tr><td>CLOUDINARY_API_KEY</td><td>your api key</td></tr>
+      <tr><td>CLOUDINARY_API_SECRET</td><td>your api secret</td></tr>
+      <tr><td>CHROMA_PERSIST_DIR</td><td><code>./chroma_store</code></td></tr>
+    </table>
+    <div class="warn"><strong>⚠ Double-check MONGO_URL</strong> — make sure you replaced &lt;password&gt; with your actual password!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>🚀 Deploy &amp; Verify</h3>
+    <ol>
+      <li>Click <strong>"Create Web Service"</strong></li>
+      <li>Watch the build logs — takes 3–5 minutes</li>
+      <li>Look for: <strong>"Your service is live"</strong> 🎉</li>
+      <li>Copy your backend URL: <code>https://portfolio-backend-xxxx.onrender.com</code></li>
+    </ol>
+    <p style="margin:.75rem 0 .5rem">Test your live backend:</p>
+    <pre><code># Replace with your actual Render URL
+https://portfolio-backend-xxxx.onrender.com/
+# → Should show: {"message":"Portfolio API is running 🚀"}
+
+https://portfolio-backend-xxxx.onrender.com/health
+# → Should show: {"status":"ok", ...}
+
+https://portfolio-backend-xxxx.onrender.com/docs
+# → Swagger UI — interactive API explorer</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <div class="note"><strong>📝 Note:</strong> If build fails, check the logs tab. 90% of failures are wrong env variables — double-check MONGO_URL and GROQ_API_KEY.</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(2)">← Back</button>
+    <button class="nav-btn nav-next" onclick="goStep(4)">Next: Deploy Frontend →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 4 — FRONTEND DEPLOY
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-4">
+  <div class="step-header">
+    <div class="step-num">5</div>
+    <div><h2>Deploy Frontend</h2><p>Update the API URL and deploy your portfolio site</p></div>
+    <div class="time-badge">⏱ ~10 mins</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--r)"></div>
+    <h3>✏️ Update API URL in frontend/index.html</h3>
+    <p style="margin-bottom:.75rem">Open <code>portfolio/frontend/index.html</code> in any text editor. Find this line (around line 335):</p>
+    <pre><code>: 'https://your-backend.onrender.com'; // ← UPDATE AFTER DEPLOY</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <p style="margin:.75rem 0">Replace it with your actual Render backend URL:</p>
+    <pre><code>: 'https://portfolio-backend-xxxx.onrender.com';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <div class="warn"><strong>⚠ Replace xxxx</strong> with your actual Render URL — don't use xxxx literally!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>📤 Push the Update to GitHub</h3>
+    <pre><code># From portfolio/ root folder
+git add frontend/index.html
+git commit -m "Set production API URL"
+git push</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>▲ Deploy Frontend as Static Site on Render</h3>
+    <ol>
+      <li>Go to <a href="https://dashboard.render.com" target="_blank" style="color:var(--a2)">dashboard.render.com</a></li>
+      <li>Click <strong>"New +"</strong> → <strong>"Static Site"</strong></li>
+      <li>Select your <code>my-portfolio</code> repo</li>
+      <li>Fill in:</li>
+    </ol>
+    <table class="env-table" style="margin-top:.75rem">
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Name</td><td><code>portfolio-frontend</code></td></tr>
+      <tr><td>Root Directory</td><td><code>frontend</code></td></tr>
+      <tr><td>Build Command</td><td><em>leave completely empty</em></td></tr>
+      <tr><td>Publish Directory</td><td><code>.</code> (just a dot)</td></tr>
+    </table>
+    <ol start="5" style="margin-top:.75rem">
+      <li>Click <strong>"Create Static Site"</strong></li>
+      <li>Deploys in ~1 minute</li>
+      <li>Your live URL: <code>https://portfolio-frontend-xxxx.onrender.com</code> 🎉</li>
+    </ol>
+    <div class="success" style="margin-top:1rem"><strong>🎉 Your portfolio is LIVE!</strong> Open the URL and you should see your full portfolio website with the AI chatbot button in the bottom right.</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--t3)"></div>
+    <h3>🔄 Future Updates (Auto Deploy)</h3>
+    <p>Every time you change any code, just run:</p>
+    <pre><code>git add .
+git commit -m "your change description"
+git push</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <p style="margin-top:.5rem;color:var(--t2)">Render detects the push and auto-redeploys in ~2 minutes. No manual steps needed!</p>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(3)">← Back</button>
+    <button class="nav-btn nav-next" onclick="goStep(5)">Next: Set Up Admin Panel →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 5 — ADMIN PANEL
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-5">
+  <div class="step-header">
+    <div class="step-num">6</div>
+    <div><h2>Fill Your Portfolio</h2><p>Use the admin panel to add your content — the AI learns from it</p></div>
+    <div class="time-badge">⏱ ~20 mins</div>
+  </div>
+
+  <div class="note">
+    <strong>💡 How it works:</strong> Everything you add through the admin panel gets saved to MongoDB AND indexed in ChromaDB. The Groq AI chatbot reads ChromaDB to answer visitor questions about you!
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>🔐 Step 1 — Log In as Admin</h3>
+    <ol>
+      <li>Open your live portfolio site</li>
+      <li>Scroll to the very bottom of the page</li>
+      <li>Click the small <strong>"🔐 Admin"</strong> text in the footer</li>
+      <li>Enter your <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> from your .env</li>
+      <li>You'll see an <strong>admin bar appear at the bottom</strong> of the page</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>📄 Step 2 — Add Your Resume (Do this FIRST!)</h3>
+    <p style="color:var(--t2);margin-bottom:.75rem">This is the most important step — the chatbot uses your resume to answer questions.</p>
+    <ol>
+      <li>Click <strong>"✏ Resume"</strong> in the admin bar</li>
+      <li>Fill in your name, title (e.g. <em>"Big Data Analytics | Automation Engineer"</em>)</li>
+      <li>Write a 3-4 line professional summary about yourself</li>
+      <li>Add your email, phone, location (Goa, India), LinkedIn, GitHub</li>
+      <li>Add your skills one by one → type the skill name → press <strong>Enter</strong></li>
+      <li>Upload your PDF resume (optional but recommended)</li>
+      <li>Click <strong>Save Resume</strong> — your homepage updates instantly!</li>
+    </ol>
+    <div class="warn"><strong>Tips for your summary:</strong> Mention your PGDM in Big Data Analytics, your Automation Engineer and Data Science Engineer roles, your dashboard experience, and DevOps skills. More detail = better chatbot answers!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--gold)"></div>
+    <h3>🚀 Step 3 — Add Your Projects</h3>
+    <ol>
+      <li>Click <strong>"+ Project"</strong> in the admin bar</li>
+      <li>Fill in Title, Short Description (1-2 lines), Tech Stack (press Enter after each)</li>
+      <li>Add GitHub URL and/or Live Demo URL if available</li>
+      <li>Check "Featured" for your best 1-2 projects</li>
+      <li>Click <strong>Save Project</strong></li>
+      <li>Then click <strong>Edit</strong> on the project → upload a screenshot image</li>
+    </ol>
+    <div class="note"><strong>💡 Project ideas to add:</strong> Dashboard projects, automation scripts, ML models, data pipelines, any GitHub projects you've worked on!</div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--r)"></div>
+    <h3>🏆 Step 4 — Add Your Certifications</h3>
+    <ol>
+      <li>Click <strong>"+ Certification"</strong> in the admin bar</li>
+      <li>Fill in the certificate name, issuer (e.g. Coursera, Google, AWS, etc.)</li>
+      <li>Add the issue date in <code>YYYY-MM</code> format (e.g. <code>2024-03</code>)</li>
+      <li>Paste the credential URL (from LinkedIn or the certificate email)</li>
+      <li>Add skills covered by this cert (press Enter after each)</li>
+      <li>Click <strong>Save Certification</strong></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>🤖 Step 5 — Test the AI Chatbot</h3>
+    <ol>
+      <li>Click the blue chat button (bottom right corner)</li>
+      <li>Try asking these questions:
+        <ul style="margin-top:.5rem">
+          <li><code>"What are your skills?"</code></li>
+          <li><code>"Tell me about your projects"</code></li>
+          <li><code>"What certifications do you have?"</code></li>
+          <li><code>"What is your educational background?"</code></li>
+          <li><code>"How can I contact you?"</code></li>
+        </ul>
+      </li>
+      <li>The AI should answer using YOUR actual resume and projects!</li>
+    </ol>
+    <div class="success">✅ If the chatbot gives accurate answers about you → everything is working perfectly!</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(4)">← Back</button>
+    <button class="nav-btn nav-next" onclick="goStep(6)">Troubleshooting →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 6 — TROUBLESHOOTING
+═══════════════════════════════════════════════════════════ -->
+<div class="step-panel" id="step-6">
+  <div class="step-header">
+    <div class="step-num">7</div>
+    <div><h2>Troubleshooting</h2><p>Common issues and exactly how to fix them</p></div>
+    <div class="time-badge">Reference</div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="accent-bar" style="background:var(--r)"></div>
+    <h3>⚠️ Common Issues</h3>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ Backend build fails on Render <span>▼</span></div>
+      <div class="trouble-a">
+        <strong>Check these in order:</strong><br/><br/>
+        1. Go to Render → your service → <strong>Logs tab</strong> → scroll to the red error<br/>
+        2. Most common: wrong Python version. Make sure Render uses Python 3.11<br/>
+        3. Go to Render → Environment → add: <code>PYTHON_VERSION = 3.11.0</code><br/>
+        4. Also check that Root Directory is set to <code>backend</code> (not <code>portfolio/backend</code>)
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ "MongoDB connection failed" in logs <span>▼</span></div>
+      <div class="trouble-a">
+        <strong>Two things to check:</strong><br/><br/>
+        1. <strong>IP Whitelist</strong> — Go to MongoDB Atlas → Network Access → Make sure <code>0.0.0.0/0</code> is listed. If not, add it.<br/><br/>
+        2. <strong>Connection string</strong> — In Render env vars, check your MONGO_URL. Make sure:<br/>
+        • You replaced <code>&lt;password&gt;</code> with your actual password<br/>
+        • No extra spaces before or after the URL<br/>
+        • The database name is in the URL before the <code>?</code>: <code>.../portfolio?retry...</code>
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ Site loads but shows "Couldn't load projects" <span>▼</span></div>
+      <div class="trouble-a">
+        The frontend can't reach the backend. Check:<br/><br/>
+        1. Open browser DevTools (F12) → Console tab → look for CORS or network error<br/>
+        2. In <code>frontend/index.html</code>, verify the API URL is your actual Render backend URL (not the placeholder)<br/>
+        3. Check the backend is running: visit <code>https://your-backend.onrender.com/health</code><br/>
+        4. Free Render services sleep after 15 mins — first request can take 30-60 seconds to wake up. Wait and refresh!
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ Admin login says "Invalid credentials" <span>▼</span></div>
+      <div class="trouble-a">
+        The email/password don't match what's in your Render env vars.<br/><br/>
+        1. Go to Render → your backend service → Environment<br/>
+        2. Check <code>ADMIN_EMAIL</code> and <code>ADMIN_PASSWORD</code> values exactly<br/>
+        3. Make sure you're typing them exactly the same in the login form (case-sensitive!)<br/>
+        4. After changing env vars in Render → click <strong>"Manual Deploy"</strong> to restart
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ Chatbot says "Chat error" or doesn't respond <span>▼</span></div>
+      <div class="trouble-a">
+        Groq API issue:<br/><br/>
+        1. Check <code>GROQ_API_KEY</code> in Render env vars — must start with <code>gsk_</code><br/>
+        2. Go to <a href="https://console.groq.com" target="_blank" style="color:var(--a2)">console.groq.com</a> → verify the key is active<br/>
+        3. Check Render logs for the specific error message<br/>
+        4. If it says "rate limit" — wait 1 minute and try again (free tier has limits but they reset quickly)
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ Image upload fails <span>▼</span></div>
+      <div class="trouble-a">
+        Cloudinary configuration issue:<br/><br/>
+        1. Double-check all 3 Cloudinary values in Render: <code>CLOUDINARY_CLOUD_NAME</code>, <code>CLOUDINARY_API_KEY</code>, <code>CLOUDINARY_API_SECRET</code><br/>
+        2. Go to Cloudinary dashboard → Settings → Upload → make sure uploads are enabled<br/>
+        3. Try uploading a smaller image (under 5MB)<br/>
+        4. Check Render logs for the Cloudinary error message
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">⚡ Backend takes 30-60 seconds to respond (first request) <span>▼</span></div>
+      <div class="trouble-a">
+        This is normal for Render's free tier! Free services "sleep" after 15 minutes of no traffic.<br/><br/>
+        <strong>Options:</strong><br/>
+        1. <strong>Free fix:</strong> Use <a href="https://uptimerobot.com" target="_blank" style="color:var(--a2)">UptimeRobot.com</a> (free) to ping your backend URL every 14 minutes → it never sleeps!<br/>
+        2. <strong>Paid fix:</strong> Upgrade to Render Starter ($7/month) → always on, no sleep<br/><br/>
+        UptimeRobot setup: Sign up free → New Monitor → HTTP → paste your backend URL → every 14 minutes
+      </div>
+    </div>
+
+    <div class="trouble-item">
+      <div class="trouble-q" onclick="toggleTrouble(this)">❌ "git push" asks for username/password <span>▼</span></div>
+      <div class="trouble-a">
+        GitHub no longer accepts passwords — you need a Personal Access Token:<br/><br/>
+        1. GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)<br/>
+        2. Generate new token → check <code>repo</code> scope → Generate<br/>
+        3. Copy the token (starts with <code>ghp_...</code>)<br/>
+        4. When git asks for password → paste the token instead<br/><br/>
+        Or easier: install <a href="https://cli.github.com" target="_blank" style="color:var(--a2)">GitHub CLI</a> and run <code>gh auth login</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--g)"></div>
+    <h3>✅ Final Checklist — Everything Working</h3>
+    <div class="check-item"><input type="checkbox" id="f1"/><label for="f1">Backend URL loads → shows <strong>API is running 🚀</strong></label></div>
+    <div class="check-item"><input type="checkbox" id="f2"/><label for="f2">Frontend URL loads → shows your portfolio</label></div>
+    <div class="check-item"><input type="checkbox" id="f3"/><label for="f3">Admin login works → see admin bar at bottom</label></div>
+    <div class="check-item"><input type="checkbox" id="f4"/><label for="f4">Resume filled in → name shows on homepage</label></div>
+    <div class="check-item"><input type="checkbox" id="f5"/><label for="f5">At least 1 project added → shows in Projects section</label></div>
+    <div class="check-item"><input type="checkbox" id="f6"/><label for="f6">Chatbot answers questions about your experience</label></div>
+    <div class="check-item"><input type="checkbox" id="f7"/><label for="f7">Image upload works for a project</label></div>
+  </div>
+
+  <div class="card">
+    <div class="accent-bar" style="background:var(--a2)"></div>
+    <h3>📈 Optional: Add Custom Domain</h3>
+    <ol>
+      <li>Buy a domain on <a href="https://www.namecheap.com" target="_blank" style="color:var(--a2)">Namecheap.com</a> (~₹800/year for <code>.dev</code> or <code>.tech</code>)</li>
+      <li>In Render → your frontend static site → <strong>Custom Domain</strong></li>
+      <li>Enter your domain → Render shows DNS records to add</li>
+      <li>In Namecheap → DNS settings → add those records</li>
+      <li>Wait 5-30 minutes → your site is on <code>yourname.tech</code>!</li>
+    </ol>
+    <div class="note"><strong>💡 Good domain ideas:</strong> <code>yourname.dev</code>, <code>yourname.tech</code>, <code>yourname.in</code></div>
+  </div>
+
+  <div class="success" style="margin-top:1.5rem">
+    <strong>🎉 You're done! Your portfolio is live with:</strong>
+    <ul style="margin-top:.75rem;padding-left:1.2rem">
+      <li>✅ Professional portfolio website with dark corporate theme</li>
+      <li>✅ AI chatbot powered by <strong>Groq llama-3.3-70b</strong> (free!)</li>
+      <li>✅ Admin panel to manage everything without touching code</li>
+      <li>✅ MongoDB database for all your content</li>
+      <li>✅ ChromaDB for smart semantic search (RAG)</li>
+      <li>✅ Auto-deploy — push to GitHub → site updates in 2 mins</li>
+    </ul>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nav-btn nav-prev" onclick="goStep(5)">← Back to Admin</button>
+    <button class="nav-btn nav-next" onclick="goStep(0)" style="background:var(--g)">↑ Back to Start</button>
+  </div>
+</div>
+
+</main>
+
+<script>
+let currentStep = 0;
+const totalSteps = 7;
+
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.pb-step').forEach((s, i) => {
+    s.classList.remove('active');
+    if (i < n) s.classList.add('done');
+    else s.classList.remove('done');
+  });
+  document.getElementById(`step-${n}`).classList.add('active');
+  document.querySelectorAll('.pb-step')[n].classList.add('active');
+  document.querySelectorAll('.pb-step')[n].classList.remove('done');
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyCode(btn) {
+  const pre = btn.parentElement;
+  const code = pre.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function toggleTrouble(el) {
+  const answer = el.nextElementSibling;
+  const arrow = el.querySelector('span');
+  answer.classList.toggle('open');
+  arrow.textContent = answer.classList.contains('open') ? '▲' : '▼';
+}
+</script>
+</body>
+</html>
