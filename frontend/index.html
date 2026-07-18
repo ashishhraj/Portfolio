@@ -274,20 +274,6 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
 }
 
 /* ══════════════════════ MOTION LAYER ══════════════════════ */
-/* Custom cursor (dot + lagging ring + label) replaces the OS cursor on hover-capable devices */
-html.custom-cursor-active, html.custom-cursor-active *{cursor:none !important}
-html.custom-cursor-active input,
-html.custom-cursor-active textarea,
-html.custom-cursor-active select{cursor:text !important}
-
-.cursor-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;will-change:transform}
-.cursor-ring{position:fixed;top:0;left:0;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.55);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);will-change:transform;
-  transition:width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1),border-color .3s,background-color .3s,opacity .3s}
-.cursor-ring.hover{width:68px;height:68px;background:rgba(124,92,255,0.16);border-color:var(--violet)}
-.cursor-ring.view{width:86px;height:86px;background:rgba(124,92,255,0.22);border-color:transparent}
-.cursor-ring.press{width:26px;height:26px}
-.cursor-label{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);font-family:var(--font-mono);font-size:0.62rem;font-weight:700;letter-spacing:1.5px;color:#fff;text-transform:uppercase;opacity:0;transition:opacity .25s}
-.cursor-label.show{opacity:1}
 
 /* soft glow field that trails the cursor across the whole page */
 .field-glow{position:fixed;top:0;left:0;width:560px;height:560px;border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);will-change:transform;
@@ -327,11 +313,10 @@ html.custom-cursor-active select{cursor:text !important}
 .contact-link:hover{transform:translateY(-3px) rotate(-1deg)}
 
 @media(hover:none),(pointer:coarse){
-  .cursor-dot,.cursor-ring,.cursor-label,.field-glow{display:none !important}
-  html.custom-cursor-active, html.custom-cursor-active *{cursor:auto !important}
+  .field-glow{display:none !important}
 }
 @media(prefers-reduced-motion: reduce){
-  .cursor-dot,.cursor-ring,.cursor-label,.field-glow{display:none !important}
+  .field-glow{display:none !important}
   .tilt,.magnetic{transition:none !important}
 }
 
@@ -1138,41 +1123,22 @@ function toggleMobile() {
   const reduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (isTouch || reduced) return;
 
-  document.documentElement.classList.add('custom-cursor-active');
-
-  /* ---------- build cursor + ambient glow elements ---------- */
-  const glow  = document.createElement('div'); glow.className  = 'field-glow';
-  const ring  = document.createElement('div'); ring.className  = 'cursor-ring';
-  const dot   = document.createElement('div'); dot.className   = 'cursor-dot';
-  const label = document.createElement('div'); label.className = 'cursor-label';
-  document.body.append(glow, ring, dot, label);
+  /* ---------- ambient trailing glow only (native cursor stays visible) ---------- */
+  const glow = document.createElement('div'); glow.className = 'field-glow';
+  document.body.append(glow);
 
   let mx = innerWidth/2, my = innerHeight/2;   // raw pointer position
   let gx = mx, gy = my;                        // lagging glow position
-  let rx = mx, ry = my;                        // lagging ring position
 
   window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  document.addEventListener('mousedown', () => ring.classList.add('press'));
-  document.addEventListener('mouseup',   () => ring.classList.remove('press'));
   document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
   document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
 
   (function raf(){
-    dot.style.transform  = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-    rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
-    ring.style.transform  = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    label.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
     gx += (mx-gx)*0.07; gy += (my-gy)*0.07;
-    glow.style.transform  = `translate(${gx}px,${gy}px) translate(-50%,-50%)`;
+    glow.style.transform = `translate(${gx}px,${gy}px) translate(-50%,-50%)`;
     requestAnimationFrame(raf);
   })();
-
-  function setCursorState(kind, text){
-    ring.classList.remove('hover','view');
-    if (kind) ring.classList.add(kind);
-    label.classList.toggle('show', !!text);
-    label.textContent = text || '';
-  }
 
   /* ---------- magnetic pull ---------- */
   function magnetize(el, strength){
@@ -1208,19 +1174,9 @@ function toggleMobile() {
 
   /* ---------- bind hover states + effects to a scope of elements ---------- */
   function bindMotion(root){
-    root.querySelectorAll('a, button, .btn, .nav-cta, .skill-chip, .tag, .contact-link')
-      .forEach(el => {
-        if (el.dataset.motionBound) return; el.dataset.motionBound = '1';
-        el.addEventListener('mouseenter', () => setCursorState('hover'));
-        el.addEventListener('mouseleave', () => setCursorState(null));
-      });
-
     root.querySelectorAll('.project-card, .cert-card').forEach(el => {
       if (el.dataset.motionBound) return; el.dataset.motionBound = '1';
       tiltify(el);
-      const text = el.classList.contains('project-card') ? 'View' : 'Cert';
-      el.addEventListener('mouseenter', () => setCursorState('view', text));
-      el.addEventListener('mouseleave', () => setCursorState(null));
     });
 
     root.querySelectorAll('.bento-tile, .panel, .contact-panel').forEach(el => {
