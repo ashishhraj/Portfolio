@@ -47,7 +47,7 @@ a{color:inherit}
 .eyebrow{display:inline-flex;align-items:center;gap:0.55rem;font-family:var(--font-mono);font-size:0.72rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--violet);margin-bottom:1rem;padding:0.35rem 0.9rem;border-radius:20px;background:rgba(124,92,255,0.1);border:1px solid rgba(124,92,255,0.25)}
 
 /* ── AMBIENT GLOW LAYERS ── */
-.glow-orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.glow-orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;transform:translate(var(--gx,0px),var(--gy,0px));transition:transform .1s linear}
 
 /* ── NAV ── */
 nav{position:fixed;top:1.1rem;left:50%;transform:translateX(-50%);z-index:100;width:min(920px,calc(100% - 2rem));background:rgba(10,11,17,0.65);backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--border);border-radius:999px;padding:0 0.5rem 0 1.4rem;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 40px rgba(0,0,0,0.35)}
@@ -63,7 +63,7 @@ nav{position:fixed;top:1.1rem;left:50%;transform:translateX(-50%);z-index:100;wi
 
 /* ── HERO ── */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px 2rem 4rem;position:relative;overflow:hidden;text-align:center}
-.hero-orb-1{width:600px;height:600px;top:-160px;left:50%;transform:translateX(-70%);background:radial-gradient(circle,rgba(124,92,255,0.45) 0%,transparent 70%)}
+.hero-orb-1{width:600px;height:600px;top:-160px;left:50%;transform:translateX(-70%) translate(var(--gx,0px),var(--gy,0px));background:radial-gradient(circle,rgba(124,92,255,0.45) 0%,transparent 70%)}
 .hero-orb-2{width:520px;height:520px;top:60px;left:60%;background:radial-gradient(circle,rgba(255,92,122,0.35) 0%,transparent 70%)}
 .hero-inner{max-width:800px;margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
 .hero-badge{display:inline-flex;align-items:center;gap:0.55rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:0.4rem 1rem;border-radius:999px;font-size:0.78rem;color:var(--text2);margin-bottom:1.8rem}
@@ -272,9 +272,108 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
   *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important}
   .reveal{opacity:1;transform:none}
 }
+
+/* ══════════════════════ MOTION LAYER ══════════════════════ */
+/* Custom cursor (dot + lagging ring + label) replaces the OS cursor on hover-capable devices */
+html.custom-cursor-active, html.custom-cursor-active *{cursor:none !important}
+html.custom-cursor-active input,
+html.custom-cursor-active textarea,
+html.custom-cursor-active select{cursor:text !important}
+
+.cursor-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:#fff;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;will-change:transform}
+.cursor-ring{position:fixed;top:0;left:0;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.55);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);will-change:transform;
+  transition:width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1),border-color .3s,background-color .3s,opacity .3s}
+.cursor-ring.hover{width:68px;height:68px;background:rgba(124,92,255,0.16);border-color:var(--violet)}
+.cursor-ring.view{width:86px;height:86px;background:rgba(124,92,255,0.22);border-color:transparent}
+.cursor-ring.press{width:26px;height:26px}
+.cursor-label{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);font-family:var(--font-mono);font-size:0.62rem;font-weight:700;letter-spacing:1.5px;color:#fff;text-transform:uppercase;opacity:0;transition:opacity .25s}
+.cursor-label.show{opacity:1}
+
+/* soft glow field that trails the cursor across the whole page */
+.field-glow{position:fixed;top:0;left:0;width:560px;height:560px;border-radius:50%;pointer-events:none;z-index:0;transform:translate(-50%,-50%);will-change:transform;
+  background:radial-gradient(circle, rgba(124,92,255,0.09), rgba(255,92,122,0.05) 45%, transparent 70%)}
+
+/* magnetic pull on buttons / CTAs */
+.magnetic{transition:transform .4s cubic-bezier(.2,.9,.25,1.35)}
+
+/* 3D tilt + spotlight glare on cards, tiles and panels */
+.tilt{transition:transform .5s cubic-bezier(.22,.9,.2,1)}
+.tilt.tilting{transition:transform .08s linear}
+.spotlight{position:relative}
+.spotlight::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;opacity:0;transition:opacity .35s;
+  background:radial-gradient(circle 260px at var(--mx,50%) var(--my,50%), rgba(124,92,255,0.22), transparent 70%)}
+.spotlight:hover::after{opacity:1}
+
+/* extra hover pop for chips/tags/links */
+.skill-chip,.tag,.project-tag,.cert-skill{transition:transform .3s cubic-bezier(.3,1.6,.4,1),background-color .25s,color .25s,border-color .25s}
+.skill-chip:hover,.tag:hover{transform:translateY(-3px) scale(1.05);border-color:var(--violet);color:#fff}
+.project-tag:hover,.cert-skill:hover{transform:translateY(-2px) scale(1.06)}
+.exp-item{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.exp-item:hover{transform:translateX(6px)}
+.exp-item:hover::before{background:var(--coral);box-shadow:0 0 0 5px rgba(255,92,122,0.18)}
+
+/* animated underline sweep on nav links */
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:-4px;height:2px;border-radius:2px;background:linear-gradient(135deg,var(--violet),var(--coral));transition:right .35s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover::after{right:0}
+
+/* marquee accelerates on hover */
+.marquee-wrap:hover .marquee{animation-duration:7s}
+.marquee span{transition:color .3s}
+.marquee-wrap:hover span{color:var(--text2)}
+
+/* contact + social links lift with a little rotation flourish */
+.contact-link{transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .25s,color .25s}
+.contact-link:hover{transform:translateY(-3px) rotate(-1deg)}
+
+@media(hover:none),(pointer:coarse){
+  .cursor-dot,.cursor-ring,.cursor-label,.field-glow{display:none !important}
+  html.custom-cursor-active, html.custom-cursor-active *{cursor:auto !important}
+}
+@media(prefers-reduced-motion: reduce){
+  .cursor-dot,.cursor-ring,.cursor-label,.field-glow{display:none !important}
+  .tilt,.magnetic{transition:none !important}
+}
+
+/* ══════════════════════ SCROLL COMPLETION + NEURAL BG ══════════════════════ */
+#neuralCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:0.65;mix-blend-mode:screen}
+
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:10000;pointer-events:none;background:rgba(255,255,255,0.04)}
+.scroll-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--violet),var(--coral),var(--lime));box-shadow:0 0 14px var(--glow)}
+
+.scroll-top{position:fixed;left:1.6rem;bottom:1.6rem;width:52px;height:52px;border-radius:50%;background:rgba(14,16,23,0.7);border:1px solid var(--border);backdrop-filter:blur(14px);cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .3s,transform .3s;font-family:var(--font-mono)}
+.scroll-top.show{opacity:1;transform:translateY(0);pointer-events:all}
+.scroll-top:hover{transform:translateY(-3px)}
+.scroll-top-ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.scroll-top-ring .ring-bg{fill:none;stroke:var(--border);stroke-width:2}
+.scroll-top-ring .ring-fg{fill:none;stroke:var(--violet);stroke-width:2;stroke-linecap:round;transition:stroke-dashoffset .1s linear}
+.scroll-top-arrow{position:relative;z-index:1;color:var(--text);font-size:1rem;line-height:1}
+.scroll-top-pct{position:absolute;bottom:-1.4rem;left:50%;transform:translateX(-50%);font-size:0.62rem;color:var(--text3);white-space:nowrap;opacity:0;transition:opacity .3s}
+.scroll-top:hover .scroll-top-pct{opacity:1}
+
+@media(max-width:768px){
+  #neuralCanvas{opacity:0.4}
+  .scroll-top{left:1rem;bottom:1rem;width:44px;height:44px}
+}
+@media(prefers-reduced-motion: reduce){
+  #neuralCanvas{display:none}
+}
 </style>
 </head>
 <body>
+
+<canvas id="neuralCanvas" aria-hidden="true"></canvas>
+
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+  <svg class="scroll-top-ring" viewBox="0 0 52 52">
+    <circle class="ring-bg" cx="26" cy="26" r="23"></circle>
+    <circle class="ring-fg" id="scrollTopFg" cx="26" cy="26" r="23"></circle>
+  </svg>
+  <span class="scroll-top-arrow">↑</span>
+  <span class="scroll-top-pct" id="scrollTopPct">0%</span>
+</button>
 
 <div class="glow-orb hero-orb-1"></div>
 <div class="glow-orb hero-orb-2"></div>
@@ -1028,6 +1127,276 @@ function toggleMobile() {
   links.style.background='var(--surface)'; links.style.padding='1rem 2rem';
   links.style.borderBottom='1px solid var(--border)';
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MOTION LAYER — custom cursor, magnetic buttons, 3D tilt/spotlight
+   cards, parallax orbs. Skipped entirely on touch devices and when
+   the user has requested reduced motion.
+   ══════════════════════════════════════════════════════════════ */
+(function initMotionLayer(){
+  const isTouch  = matchMedia('(hover:none), (pointer:coarse)').matches;
+  const reduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (isTouch || reduced) return;
+
+  document.documentElement.classList.add('custom-cursor-active');
+
+  /* ---------- build cursor + ambient glow elements ---------- */
+  const glow  = document.createElement('div'); glow.className  = 'field-glow';
+  const ring  = document.createElement('div'); ring.className  = 'cursor-ring';
+  const dot   = document.createElement('div'); dot.className   = 'cursor-dot';
+  const label = document.createElement('div'); label.className = 'cursor-label';
+  document.body.append(glow, ring, dot, label);
+
+  let mx = innerWidth/2, my = innerHeight/2;   // raw pointer position
+  let gx = mx, gy = my;                        // lagging glow position
+  let rx = mx, ry = my;                        // lagging ring position
+
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener('mousedown', () => ring.classList.add('press'));
+  document.addEventListener('mouseup',   () => ring.classList.remove('press'));
+  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { glow.style.opacity = '1'; });
+
+  (function raf(){
+    dot.style.transform  = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+    ring.style.transform  = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    label.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    gx += (mx-gx)*0.07; gy += (my-gy)*0.07;
+    glow.style.transform  = `translate(${gx}px,${gy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(raf);
+  })();
+
+  function setCursorState(kind, text){
+    ring.classList.remove('hover','view');
+    if (kind) ring.classList.add(kind);
+    label.classList.toggle('show', !!text);
+    label.textContent = text || '';
+  }
+
+  /* ---------- magnetic pull ---------- */
+  function magnetize(el, strength){
+    el.classList.add('magnetic');
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const relX = e.clientX - r.left - r.width/2;
+      const relY = e.clientY - r.top  - r.height/2;
+      el.style.transform = `translate(${relX*strength}px, ${relY*strength}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  }
+
+  /* ---------- 3D tilt + spotlight ---------- */
+  function tiltify(el){
+    el.classList.add('tilt', 'spotlight');
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top)  / r.height;
+      el.style.setProperty('--mx', `${px*100}%`);
+      el.style.setProperty('--my', `${py*100}%`);
+      const rotY = (px - 0.5) * 10;
+      const rotX = (0.5 - py) * 10;
+      el.classList.add('tilting');
+      el.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.classList.remove('tilting');
+      el.style.transform = '';
+    });
+  }
+
+  /* ---------- bind hover states + effects to a scope of elements ---------- */
+  function bindMotion(root){
+    root.querySelectorAll('a, button, .btn, .nav-cta, .skill-chip, .tag, .contact-link')
+      .forEach(el => {
+        if (el.dataset.motionBound) return; el.dataset.motionBound = '1';
+        el.addEventListener('mouseenter', () => setCursorState('hover'));
+        el.addEventListener('mouseleave', () => setCursorState(null));
+      });
+
+    root.querySelectorAll('.project-card, .cert-card').forEach(el => {
+      if (el.dataset.motionBound) return; el.dataset.motionBound = '1';
+      tiltify(el);
+      const text = el.classList.contains('project-card') ? 'View' : 'Cert';
+      el.addEventListener('mouseenter', () => setCursorState('view', text));
+      el.addEventListener('mouseleave', () => setCursorState(null));
+    });
+
+    root.querySelectorAll('.bento-tile, .panel, .contact-panel').forEach(el => {
+      if (el.dataset.motionBound) return; el.dataset.motionBound = '1';
+      tiltify(el);
+    });
+
+    root.querySelectorAll('.btn, .nav-cta').forEach(el => {
+      if (el.dataset.magnetBound) return; el.dataset.magnetBound = '1';
+      magnetize(el, 0.3);
+    });
+    const chatTrigger = root.querySelector ? root.querySelector('.chat-trigger') : null;
+    if (chatTrigger && !chatTrigger.dataset.magnetBound){
+      chatTrigger.dataset.magnetBound = '1';
+      magnetize(chatTrigger, 0.35);
+    }
+  }
+
+  bindMotion(document);
+
+  /* keep binding new cards as they're loaded async from the API */
+  ['projects-grid','certs-grid'].forEach(id => {
+    const grid = document.getElementById(id);
+    if (!grid) return;
+    new MutationObserver(() => bindMotion(grid)).observe(grid, { childList: true });
+  });
+
+  /* ---------- parallax hero orbs ---------- */
+  const orbs = document.querySelectorAll('.glow-orb');
+  window.addEventListener('mousemove', e => {
+    const px = (e.clientX/innerWidth) - 0.5;
+    const py = (e.clientY/innerHeight) - 0.5;
+    orbs.forEach((o,i) => {
+      const depth = (i+1) * 22;
+      o.style.setProperty('--gx', `${px*depth}px`);
+      o.style.setProperty('--gy', `${py*depth}px`);
+    });
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   AMBIENT NEURAL NETWORK — tech-flavoured background: drifting
+   nodes link up like neurons/data points, brighten near the
+   cursor, and occasionally "fire" a pulse along a connection.
+   ══════════════════════════════════════════════════════════════ */
+(function initNeuralBG(){
+  const canvas = document.getElementById('neuralCanvas');
+  if (!canvas) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) { canvas.remove(); return; }
+
+  const ctx = canvas.getContext('2d');
+  const COLORS = ['124,92,255', '255,92,122', '198,255,92'];
+  let W, H, DPR, nodes, LINK_DIST, MOUSE_DIST;
+
+  function setup(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    LINK_DIST = Math.max(90, Math.min(150, W / 9));
+    MOUSE_DIST = LINK_DIST * 1.4;
+    const count = Math.round(Math.min(95, Math.max(28, (W * H) / 15500)));
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 1.5 + 0.7,
+      c: COLORS[(Math.random() * COLORS.length) | 0]
+    }));
+  }
+  setup();
+  let resizeT;
+  window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(setup, 200); });
+
+  const mouse = { x: -9999, y: -9999 };
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  let pulses = [];
+  function spawnPulse(edges){
+    if (edges.length && Math.random() < 0.025){
+      const e = edges[(Math.random() * edges.length) | 0];
+      pulses.push({ a: e.a, b: e.b, t: 0 });
+    }
+  }
+
+  function frame(){
+    ctx.clearRect(0, 0, W, H);
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    const edges = [];
+    for (let i = 0; i < nodes.length; i++){
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++){
+        const b = nodes[j];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+        if (dist < LINK_DIST){
+          const alpha = (1 - dist / LINK_DIST) * 0.32;
+          ctx.strokeStyle = `rgba(124,92,255,${alpha})`;
+          ctx.lineWidth = 0.6;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          edges.push({ a, b });
+        }
+      }
+      const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (dm < MOUSE_DIST){
+        const alpha = (1 - dm / MOUSE_DIST) * 0.55;
+        ctx.strokeStyle = `rgba(255,92,122,${alpha})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        a.x += (mouse.x - a.x) * 0.0008; a.y += (mouse.y - a.y) * 0.0008;
+      }
+    }
+
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(${n.c},0.85)`;
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    spawnPulse(edges);
+    pulses.forEach(p => {
+      p.t += 0.018;
+      const x = p.a.x + (p.b.x - p.a.x) * p.t;
+      const y = p.a.y + (p.b.y - p.a.y) * p.t;
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(198,255,92,0.95)';
+      ctx.shadowColor = 'rgba(198,255,92,0.9)';
+      ctx.shadowBlur = 7;
+      ctx.arc(x, y, 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+    pulses = pulses.filter(p => p.t < 1);
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL COMPLETION — top progress bar + circular scroll-to-top
+   ══════════════════════════════════════════════════════════════ */
+(function initScrollProgress(){
+  const bar = document.getElementById('scrollBar');
+  const btn = document.getElementById('scrollTopBtn');
+  const fg  = document.getElementById('scrollTopFg');
+  const pctLabel = document.getElementById('scrollTopPct');
+  if (!bar || !fg) return;
+
+  const R = 23;
+  const CIRC = 2 * Math.PI * R;
+  fg.style.strokeDasharray = `${CIRC}`;
+  fg.style.strokeDashoffset = `${CIRC}`;
+
+  function update(){
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - doc.clientHeight;
+    const pct = max > 0 ? Math.min(1, doc.scrollTop / max) : 0;
+    bar.style.width = (pct * 100) + '%';
+    fg.style.strokeDashoffset = `${CIRC * (1 - pct)}`;
+    if (pctLabel) pctLabel.textContent = Math.round(pct * 100) + '%';
+    if (btn) btn.classList.toggle('show', doc.scrollTop > 420);
+  }
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  if (btn) btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+})();
 </script>
 
 </body>
