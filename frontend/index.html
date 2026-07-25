@@ -123,6 +123,10 @@ h2.section-title{font-family:var(--font-display);font-size:2.5rem;font-weight:70
 .skill-chip{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;padding:0.55rem 0.85rem;font-size:0.8rem;font-weight:500;display:flex;align-items:center;gap:0.5rem}
 .skill-chip::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--lime)}
 .exp-timeline{display:flex;flex-direction:column;gap:1.5rem;text-align:left}
+.edu-timeline{max-width:720px;margin:0 auto;gap:2rem}
+.edu-timeline .exp-item{padding-left:1.8rem}
+.edu-timeline .exp-item h4{font-size:1.08rem}
+.edu-timeline .exp-item p{font-size:0.9rem}
 .exp-item{position:relative;padding-left:1.5rem;border-left:1px solid var(--border)}
 .exp-item::before{content:'';position:absolute;left:-5px;top:5px;width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--coral))}
 .exp-item h4{font-weight:700;font-size:0.98rem;margin-bottom:0.2rem;font-family:var(--font-display)}
@@ -131,7 +135,7 @@ h2.section-title{font-family:var(--font-display);font-size:2.5rem;font-weight:70
 .exp-item p{color:var(--text2);font-size:0.85rem;line-height:1.75}
 
 /* ── PROJECTS ── */
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1.4rem}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
 .project-card{border-radius:var(--radius);overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;display:flex;flex-direction:column;position:relative}
 .project-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(124,92,255,0.18)}
 .project-img{height:190px;background:linear-gradient(135deg,rgba(124,92,255,0.18),rgba(255,92,122,0.14));display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
@@ -148,7 +152,7 @@ h2.section-title{font-family:var(--font-display);font-size:2.5rem;font-weight:70
 
 /* ── CERTIFICATIONS ── */
 .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
-.education-grid,.achievements-grid,.positions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.achievements-grid,.positions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
 .clickable-card{cursor:pointer}
 .cert-card .cert-desc{font-size:0.82rem;color:var(--text2);margin-top:0.6rem;line-height:1.55}
 .cert-card{border-radius:18px;padding:1.4rem;transition:transform 0.2s,box-shadow 0.2s;position:relative;text-align:left}
@@ -368,7 +372,7 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
 
 <!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo"><span class="mark"></span>dev.portfolio</div>
+  <div class="nav-logo"><span class="mark"></span><span id="nav-brand">dev.portfolio</span></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#education">Education</a></li>
@@ -418,9 +422,8 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
 
 <!-- MARQUEE -->
 <div class="marquee-wrap">
-  <div class="marquee">
-    <span>Python</span><span>Apache Spark</span><span>Machine Learning</span><span>Selenium</span><span>Power BI</span><span>Docker</span><span>MongoDB</span><span>FastAPI</span><span>Hadoop</span>
-    <span>Python</span><span>Apache Spark</span><span>Machine Learning</span><span>Selenium</span><span>Power BI</span><span>Docker</span><span>MongoDB</span><span>FastAPI</span><span>Hadoop</span>
+  <div class="marquee" id="marquee-track">
+    <span>Loading skills...</span>
   </div>
 </div>
 
@@ -435,8 +438,7 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
     <div class="bento">
       <div class="bento-tile tile-about glass">
         <div class="about-text" id="about-text">
-          <p>Currently pursuing <strong>PGDM in Big Data Analytics</strong>, bringing hands-on experience across automation engineering, data science, and DevOps domains. Passionate about building data-driven solutions and scalable automation pipelines.</p>
-          <p>I've worked on interactive dashboards, automated testing frameworks, and data science projects that turn raw data into actionable insights.</p>
+          <p>Loading...</p>
         </div>
       </div>
       <div class="bento-tile tile-skills glass">
@@ -458,18 +460,7 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
         <div id="experience-section">
           <div class="tile-h">Experience</div>
           <div class="exp-timeline" id="exp-timeline">
-            <div class="exp-item">
-              <h4>Automation Engineer</h4>
-              <div class="company">Previous Company</div>
-              <div class="period">2022 — 2023</div>
-              <p>Developed automation frameworks using Selenium, built CI/CD pipelines, and streamlined testing workflows reducing manual effort significantly.</p>
-            </div>
-            <div class="exp-item">
-              <h4>Data Science Engineer</h4>
-              <div class="company">Previous Company</div>
-              <div class="period">2023 — 2024</div>
-              <p>Built ML models, developed interactive dashboards with Power BI and Tableau, and implemented data pipelines using Apache Spark.</p>
-            </div>
+            <div style="color:var(--text3);font-size:0.85rem">Loading experience...</div>
           </div>
         </div>
       </div>
@@ -485,8 +476,8 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
       <h2 class="section-title">Education</h2>
       <p class="section-desc">Academic qualifications and institutions.</p>
     </div>
-    <div class="education-grid" id="education-grid">
-      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading education...</div>
+    <div class="exp-timeline edu-timeline" id="education-timeline">
+      <div style="color:var(--text3);font-size:0.85rem">Loading education...</div>
     </div>
   </div>
 </section>
@@ -620,6 +611,7 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
   <span style="font-size:0.82rem;color:var(--text2);font-weight:600">⚙ Admin Panel</span>
   <button class="admin-tab active" onclick="openAdminModal('project')">+ Project</button>
   <button class="admin-tab" onclick="openAdminModal('cert')">+ Certification</button>
+  <button class="admin-tab" onclick="openAdminModal('experience')">+ Experience</button>
   <button class="admin-tab" onclick="openAdminModal('education')">+ Education</button>
   <button class="admin-tab" onclick="openAdminModal('achievement')">+ Achievement</button>
   <button class="admin-tab" onclick="openAdminModal('position')">+ Position</button>
@@ -662,6 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadResume();
   loadProjects();
   loadCertifications();
+  loadExperience();
   loadEducation();
   loadAchievements();
   loadPositions();
@@ -677,6 +670,9 @@ async function loadResume() {
     const data = await res.json();
     
     if (data.name) {
+      const brandEl = document.getElementById('nav-brand');
+      if (brandEl) brandEl.textContent = data.brand_name || 'dev.portfolio';
+
       document.getElementById('hero-name').innerHTML = `${data.name.split(' ')[0]}'s <span>Portfolio</span>`;
       document.getElementById('hero-sub').textContent = data.summary || '';
       document.getElementById('card-name').textContent = data.name;
@@ -693,26 +689,57 @@ async function loadResume() {
       if (data.pdf_url) { document.getElementById('download-resume-btn').href = data.pdf_url; document.getElementById('download-resume-btn').target='_blank'; }
       
       if (data.skills && data.skills.length) {
-        // Hero tags
+        // Featured skills (curated) drive the hero tags + scrolling marquee;
+        // falls back to the first 8 of the full skills list if none are chosen.
+        const featured = (data.featured_skills && data.featured_skills.length) ? data.featured_skills : data.skills.slice(0,8);
+
         const heroTags = document.getElementById('hero-tags');
-        heroTags.innerHTML = data.skills.slice(0,8).map(s=>`<span class="tag">${s}</span>`).join('');
-        // Skills grid
+        heroTags.innerHTML = featured.map(s=>`<span class="tag">${s}</span>`).join('');
+
+        const marquee = document.getElementById('marquee-track');
+        if (marquee && featured.length) {
+          const spans = featured.map(s=>`<span>${s}</span>`).join('');
+          marquee.innerHTML = spans + spans; // duplicated for a seamless scroll loop
+        }
+
+        // Full skills grid always shows everything
         const sg = document.getElementById('skills-grid');
         sg.innerHTML = data.skills.map(s=>`<div class="skill-chip">${s}</div>`).join('');
       }
       
-      if (data.experiences && data.experiences.length) {
-        const tl = document.getElementById('exp-timeline');
-        tl.innerHTML = data.experiences.map(e=>`
-          <div class="exp-item">
-            <h4>${e.role}</h4>
-            <div class="company">${e.company}</div>
-            <div class="period">${e.start_date} — ${e.end_date || 'Present'}</div>
-            <p>${e.description}</p>
-          </div>`).join('');
+      if (data.summary) {
+        const about = document.getElementById('about-text');
+        if (about) about.innerHTML = `<p>${data.summary}</p>`;
       }
     }
   } catch(e) { console.warn('Resume not loaded:', e.message); }
+}
+
+// ── EXPERIENCE ────────────────────────────────────────────────────────────
+async function loadExperience() {
+  const tl = document.getElementById('exp-timeline');
+  if (!tl) return;
+  try {
+    const res = await fetch(`${API}/api/experience/`);
+    const items = await res.json();
+
+    if (!items.length) {
+      tl.innerHTML = `<div style="color:var(--text3);font-size:0.85rem">No experience added yet.${adminToken ? ' Click "+ Experience" below to add one.' : ''}</div>`;
+      return;
+    }
+
+    tl.innerHTML = items.map(x => `
+      <div class="exp-item">
+        <h4>${x.role}</h4>
+        <div class="company">${x.company}</div>
+        <div class="period">${x.start_date} — ${x.end_date || 'Present'}</div>
+        <p>${x.description}</p>
+        ${x.skills?.length ? `<div class="cert-skills" style="margin-top:0.5rem">${x.skills.slice(0,6).map(s=>`<span class="cert-skill">${s}</span>`).join('')}</div>` : ''}
+        ${adminToken ? `<div style="margin-top:0.6rem"><button class="edit-btn" onclick="editExperience('${x.id}')">Edit</button><button class="delete-btn" onclick="deleteExperience('${x.id}')">Delete</button></div>` : ''}
+      </div>`).join('');
+  } catch(e) {
+    tl.innerHTML = `<div style="color:var(--text3);font-size:0.85rem">Couldn't load experience.</div>`;
+  }
 }
 
 // ── PROJECTS ──────────────────────────────────────────────────────────────
@@ -730,21 +757,16 @@ async function loadProjects() {
     }
     
     grid.innerHTML = projects.map(p => `
-      <div class="project-card">
-        <div class="project-img">
-          ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}"/>` : `<span style="font-size:2.5rem">🚀</span>`}
-          ${p.featured ? '<span class="featured-badge">★ Featured</span>' : ''}
+      <div class="cert-card project-card">
+        <div class="cert-issuer">${p.featured ? '★ Featured' : (p.tech_stack?.[0] || 'Project')}</div>
+        <div class="cert-title">${p.title}</div>
+        <p class="cert-desc">${p.description}</p>
+        ${p.tech_stack?.length ? `<div class="cert-skills">${p.tech_stack.slice(0,6).map(t=>`<span class="cert-skill">${t}</span>`).join('')}</div>` : ''}
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.9rem">
+          ${p.github_url ? `<a href="${p.github_url}" class="cert-link" target="_blank">⌥ GitHub</a>` : ''}
+          ${p.live_url ? `<a href="${p.live_url}" class="cert-link" target="_blank">↗ Live Demo</a>` : ''}
         </div>
-        <div class="project-body">
-          <div class="project-tags">${(p.tech_stack||[]).slice(0,4).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>
-          <h3>${p.title}</h3>
-          <p>${p.description}</p>
-          <div class="project-links">
-            ${p.github_url ? `<a href="${p.github_url}" class="project-link" target="_blank">⌥ GitHub</a>` : ''}
-            ${p.live_url ? `<a href="${p.live_url}" class="project-link" target="_blank">↗ Live Demo</a>` : ''}
-            ${adminToken ? `<button class="edit-btn" onclick="editProject('${p.id}')">Edit</button><button class="delete-btn" onclick="deleteProject('${p.id}')">Delete</button>` : ''}
-          </div>
-        </div>
+        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editProject('${p.id}')">Edit</button><button class="delete-btn" onclick="deleteProject('${p.id}')">Delete</button></div>` : ''}
       </div>`).join('');
   } catch(e) {
     grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load projects.</div>`;
@@ -781,27 +803,28 @@ async function loadCertifications() {
 
 // ── EDUCATION ─────────────────────────────────────────────────────────────
 async function loadEducation() {
-  const grid = document.getElementById('education-grid');
+  const tl = document.getElementById('education-timeline');
+  if (!tl) return;
   try {
     const res = await fetch(`${API}/api/education/`);
     const items = await res.json();
 
     if (!items.length) {
-      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
-        No education entries yet. ${adminToken ? 'Click "+ Education" below to add one.' : 'Check back soon!'}</div>`;
+      tl.innerHTML = `<div style="color:var(--text3);font-size:0.85rem">No education entries yet.${adminToken ? ' Click "+ Education" below to add one.' : ''}</div>`;
       return;
     }
 
-    grid.innerHTML = items.map(e => `
-      <div class="cert-card">
-        <div class="cert-issuer">${e.start_year}${e.end_year ? ' — ' + e.end_year : ' — Present'}</div>
-        <div class="cert-title">${e.degree}${e.field ? ' in ' + e.field : ''}</div>
-        <div class="cert-date">${e.institution}${e.grade ? ' · ' + e.grade : ''}</div>
-        ${e.description ? `<p class="cert-desc">${e.description}</p>` : ''}
-        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editEducation('${e.id}')">Edit</button><button class="delete-btn" onclick="deleteEducation('${e.id}')">Delete</button></div>` : ''}
+    tl.innerHTML = items.map(e => `
+      <div class="exp-item">
+        <h4>${e.degree}${e.field ? ' in ' + e.field : ''}</h4>
+        <div class="company">${e.institution}</div>
+        <div class="period">${e.start_year}${e.end_year ? ' — ' + e.end_year : ' — Present'}${e.grade ? ' · ' + e.grade : ''}</div>
+        ${e.description ? `<p>${e.description}</p>` : ''}
+        ${e.tags?.length ? `<div class="cert-skills" style="margin-top:0.5rem">${e.tags.slice(0,6).map(t=>`<span class="cert-skill">${t}</span>`).join('')}</div>` : ''}
+        ${adminToken ? `<div style="margin-top:0.6rem"><button class="edit-btn" onclick="editEducation('${e.id}')">Edit</button><button class="delete-btn" onclick="deleteEducation('${e.id}')">Delete</button></div>` : ''}
       </div>`).join('');
   } catch(e) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load education.</div>`;
+    tl.innerHTML = `<div style="color:var(--text3);font-size:0.85rem">Couldn't load education.</div>`;
   }
 }
 
@@ -954,7 +977,7 @@ async function doLogin() {
     localStorage.setItem('portfolio_admin_token', adminToken);
     hideAdminLogin();
     showAdminBar();
-    loadProjects(); loadCertifications(); loadEducation(); loadAchievements(); loadPositions();
+    loadProjects(); loadCertifications(); loadExperience(); loadEducation(); loadAchievements(); loadPositions();
   } catch(e) { err.textContent = 'Connection error'; err.style.display='block'; }
 }
 
@@ -964,7 +987,7 @@ function adminLogout() {
   adminToken = null;
   localStorage.removeItem('portfolio_admin_token');
   document.getElementById('adminBar').classList.remove('show');
-  loadProjects(); loadCertifications(); loadEducation(); loadAchievements(); loadPositions();
+  loadProjects(); loadCertifications(); loadExperience(); loadEducation(); loadAchievements(); loadPositions();
 }
 
 // ── ADMIN MODAL ───────────────────────────────────────────────────────────
@@ -980,6 +1003,9 @@ function openAdminModal(type) {
   } else if (type === 'cert') {
     title.innerHTML = 'Add Certification <button class="modal-close" onclick="closeAdminModal()">×</button>';
     body.innerHTML = certForm();
+  } else if (type === 'experience') {
+    title.innerHTML = 'Add Experience <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = experienceForm();
   } else if (type === 'education') {
     title.innerHTML = 'Add Education <button class="modal-close" onclick="closeAdminModal()">×</button>';
     body.innerHTML = educationForm();
@@ -1031,6 +1057,18 @@ function certForm(data={}) {
     <button class="btn-full" onclick="saveCert()">${editingId?'Update':'Save'} Certification</button>`;
 }
 
+function experienceForm(data={}) {
+  return `
+    <div class="form-group"><label>Company *</label><input id="xCompany" value="${data.company||''}" placeholder="e.g. XYZ Technologies"/></div>
+    <div class="form-group"><label>Role *</label><input id="xRole" value="${data.role||''}" placeholder="e.g. Automation Engineer"/></div>
+    <div class="form-group"><label>Start Date *</label><input id="xStart" value="${data.start_date||''}" placeholder="2022-06"/></div>
+    <div class="form-group"><label>End Date</label><input id="xEnd" value="${data.end_date||''}" placeholder="2023-05 (leave blank for Present)"/></div>
+    <div class="form-group"><label>Description *</label><textarea id="xDesc" placeholder="What did you do?">${data.description||''}</textarea></div>
+    <div class="form-group"><label>Skills (press Enter to add)</label><div class="tags-input" id="expSkillsInput"><input id="expSkillsRaw" placeholder="Selenium, CI/CD, ..."/></div></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveExperience()">${editingId?'Update':'Save'} Experience</button>`;
+}
+
 function educationForm(data={}) {
   return `
     <div class="form-group"><label>Institution *</label><input id="eInstitution" value="${data.institution||''}" placeholder="e.g. XYZ Institute of Management"/></div>
@@ -1040,6 +1078,7 @@ function educationForm(data={}) {
     <div class="form-group"><label>End Year</label><input id="eEndYear" type="number" value="${data.end_year||''}" placeholder="2026 (leave blank if ongoing)"/></div>
     <div class="form-group"><label>Grade / CGPA</label><input id="eGrade" value="${data.grade||''}" placeholder="e.g. 8.7 CGPA or 85%"/></div>
     <div class="form-group"><label>Description</label><textarea id="eDesc" placeholder="Relevant coursework, honors, etc.">${data.description||''}</textarea></div>
+    <div class="form-group"><label>Tags (press Enter to add)</label><div class="tags-input" id="eduTagsInput"><input id="eduTagsRaw" placeholder="Relevant coursework, honors, ..."/></div></div>
     <div id="formMsg" class="success-msg" style="display:none"></div>
     <button class="btn-full" onclick="saveEducation()">${editingId?'Update':'Save'} Education</button>`;
 }
@@ -1068,6 +1107,7 @@ function positionForm(data={}) {
 
 function resumeForm() {
   return `
+    <div class="form-group"><label>Site Brand Name</label><input id="rBrand" placeholder="dev.portfolio"/><div style="font-size:0.72rem;color:var(--text3);margin-top:0.3rem">Shown in the navbar logo (top-left)</div></div>
     <div class="form-group"><label>Full Name *</label><input id="rName" placeholder="Your Full Name"/></div>
     <div class="form-group"><label>Title/Role *</label><input id="rTitle" placeholder="Big Data Analytics | Automation Engineer"/></div>
     <div class="form-group"><label>Professional Summary *</label><textarea id="rSummary" placeholder="Brief professional summary..."></textarea></div>
@@ -1076,7 +1116,8 @@ function resumeForm() {
     <div class="form-group"><label>Location</label><input id="rLocation" placeholder="Goa, India"/></div>
     <div class="form-group"><label>LinkedIn URL</label><input id="rLinkedin" placeholder="https://linkedin.com/in/..."/></div>
     <div class="form-group"><label>GitHub URL</label><input id="rGithub" placeholder="https://github.com/..."/></div>
-    <div class="form-group"><label>Skills (press Enter to add)</label><div class="tags-input" id="resumeSkillsInput"><input id="resumeSkillsRaw" placeholder="Python, Spark, ..."/></div></div>
+    <div class="form-group"><label>All Skills (press Enter to add)</label><div class="tags-input" id="resumeSkillsInput"><input id="resumeSkillsRaw" placeholder="Python, Spark, ..."/></div></div>
+    <div class="form-group"><label>Featured Skills (shown at top / scrolling bar)</label><div class="tags-input" id="featuredSkillsInput"><input id="featuredSkillsRaw" placeholder="Pick your top 6-9 skills..."/></div><div style="font-size:0.72rem;color:var(--text3);margin-top:0.3rem">Controls the hero tags and the scrolling skills bar. Leave empty to auto-use your first 8 skills.</div></div>
     <div class="form-group"><label>Upload PDF Resume</label><input type="file" id="rPdf" accept=".pdf" style="color:var(--text2);font-size:0.82rem"/><button onclick="uploadResumePdf()" style="margin-top:0.5rem;width:100%;padding:0.6rem;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;cursor:pointer">Upload PDF</button></div>
     <div id="formMsg" class="success-msg" style="display:none"></div>
     <button class="btn-full" onclick="saveResume()">Save Resume</button>`;
@@ -1086,7 +1127,7 @@ function resumeForm() {
 let tagStores = {};
 function initTagsInput() {
   tagStores = {};
-  ['techInput','tagsInput','skillsInput','resumeSkillsInput'].forEach(id => {
+  ['techInput','tagsInput','skillsInput','resumeSkillsInput','expSkillsInput','featuredSkillsInput','eduTagsInput'].forEach(id => {
     const container = document.getElementById(id);
     if (!container) return;
     const rawInput = container.querySelector('input');
@@ -1177,6 +1218,31 @@ async function saveCert() {
   }
 }
 
+async function saveExperience() {
+  const payload = {
+    company: document.getElementById('xCompany').value,
+    role: document.getElementById('xRole').value,
+    start_date: document.getElementById('xStart').value,
+    end_date: document.getElementById('xEnd').value || 'Present',
+    description: document.getElementById('xDesc').value,
+    skills: getTags('expSkillsInput')
+  };
+  const url = editingId ? `${API}/api/experience/${editingId}` : `${API}/api/experience/`;
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadExperience(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
 async function saveEducation() {
   const payload = {
     institution: document.getElementById('eInstitution').value,
@@ -1185,7 +1251,8 @@ async function saveEducation() {
     start_year: parseInt(document.getElementById('eStartYear').value) || null,
     end_year: document.getElementById('eEndYear').value ? parseInt(document.getElementById('eEndYear').value) : null,
     grade: document.getElementById('eGrade').value,
-    description: document.getElementById('eDesc').value
+    description: document.getElementById('eDesc').value,
+    tags: getTags('eduTagsInput')
   };
   const url = editingId ? `${API}/api/education/${editingId}` : `${API}/api/education/`;
   const method = editingId ? 'PUT' : 'POST';
@@ -1256,6 +1323,7 @@ async function loadResumeIntoForm() {
     const res = await fetch(`${API}/api/resume/`);
     if (!res.ok) return;
     const data = await res.json();
+    document.getElementById('rBrand').value = data.brand_name || 'dev.portfolio';
     document.getElementById('rName').value = data.name || '';
     document.getElementById('rTitle').value = data.title || '';
     document.getElementById('rSummary').value = data.summary || '';
@@ -1264,12 +1332,14 @@ async function loadResumeIntoForm() {
     document.getElementById('rLocation').value = data.location || '';
     document.getElementById('rLinkedin').value = data.linkedin || '';
     document.getElementById('rGithub').value = data.github || '';
-    if (data.skills) { tagStores['resumeSkillsInput'] = []; data.skills.forEach(s=>{ if(!tagStores['resumeSkillsInput']) tagStores['resumeSkillsInput']=[]; tagStores['resumeSkillsInput'].push(s); renderTag('resumeSkillsInput', s); }); }
+    if (data.skills) { data.skills.forEach(s=>{ tagStores['resumeSkillsInput'].push(s); renderTag('resumeSkillsInput', s); }); }
+    if (data.featured_skills) { data.featured_skills.forEach(s=>{ tagStores['featuredSkillsInput'].push(s); renderTag('featuredSkillsInput', s); }); }
   } catch(e) {}
 }
 
 async function saveResume() {
   const payload = {
+    brand_name: document.getElementById('rBrand').value || 'dev.portfolio',
     name: document.getElementById('rName').value,
     title: document.getElementById('rTitle').value,
     summary: document.getElementById('rSummary').value,
@@ -1279,7 +1349,7 @@ async function saveResume() {
     linkedin: document.getElementById('rLinkedin').value,
     github: document.getElementById('rGithub').value,
     skills: getTags('resumeSkillsInput'),
-    experiences: [], education: []
+    featured_skills: getTags('featuredSkillsInput')
   };
   const res = await fetch(`${API}/api/resume/`, {
     method:'PUT', headers:{'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
@@ -1354,6 +1424,25 @@ async function deleteCert(id) {
   loadCertifications();
 }
 
+async function editExperience(id) {
+  const res = await fetch(`${API}/api/experience/`);
+  const all = await res.json();
+  const x = all.find(v=>v.id===id);
+  if (!x) return;
+  editingId = id;
+  document.getElementById('modalTitle').innerHTML = 'Edit Experience <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  document.getElementById('modalBody').innerHTML = experienceForm(x);
+  initTagsInput();
+  (x.skills||[]).forEach(s=>{ tagStores['expSkillsInput'].push(s); renderTag('expSkillsInput',s); });
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deleteExperience(id) {
+  if (!confirm('Delete this experience entry?')) return;
+  await fetch(`${API}/api/experience/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadExperience();
+}
+
 async function editEducation(id) {
   const res = await fetch(`${API}/api/education/`);
   const all = await res.json();
@@ -1362,6 +1451,8 @@ async function editEducation(id) {
   editingId = id;
   document.getElementById('modalTitle').innerHTML = 'Edit Education <button class="modal-close" onclick="closeAdminModal()">×</button>';
   document.getElementById('modalBody').innerHTML = educationForm(e);
+  initTagsInput();
+  (e.tags||[]).forEach(t=>{ tagStores['eduTagsInput'].push(t); renderTag('eduTagsInput',t); });
   document.getElementById('adminModal').classList.add('show');
 }
 
@@ -1508,7 +1599,7 @@ function toggleMobile() {
   bindMotion(document);
 
   /* keep binding new cards as they're loaded async from the API */
-  ['projects-grid','certs-grid','education-grid','achievements-grid','positions-grid'].forEach(id => {
+  ['projects-grid','certs-grid','achievements-grid','positions-grid'].forEach(id => {
     const grid = document.getElementById(id);
     if (!grid) return;
     new MutationObserver(() => bindMotion(grid)).observe(grid, { childList: true });

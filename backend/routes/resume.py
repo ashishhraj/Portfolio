@@ -12,21 +12,6 @@ from utils.auth_dep import get_current_admin
 
 router = APIRouter()
 
-class Experience(BaseModel):
-    company: str
-    role: str
-    start_date: str
-    end_date: Optional[str] = "Present"
-    description: str
-    skills: List[str] = []
-
-class Education(BaseModel):
-    institution: str
-    degree: str
-    field: str
-    start_year: int
-    end_year: Optional[int] = None
-
 class ResumeIn(BaseModel):
     name: str
     title: str
@@ -37,8 +22,8 @@ class ResumeIn(BaseModel):
     linkedin: Optional[str] = ""
     github: Optional[str] = ""
     skills: List[str] = []
-    experiences: List[Experience] = []
-    education: List[Education] = []
+    featured_skills: List[str] = []      # curated subset shown in hero tags + the scrolling marquee
+    brand_name: Optional[str] = "dev.portfolio"   # text shown in the navbar logo
 
 @router.get("/")
 async def get_resume(db=Depends(get_db)):
@@ -60,9 +45,8 @@ async def update_resume(resume: ResumeIn, db=Depends(get_db)):
         result = await db.resume.insert_one(data)
         doc_id = str(result.inserted_id)
     
-    # Index full resume in ChromaDB
-    exp_text = " | ".join([f"{e.role} at {e.company}: {e.description}" for e in resume.experiences])
-    chroma_text = f"Name: {resume.name}. Title: {resume.title}. Summary: {resume.summary}. Skills: {', '.join(resume.skills)}. Experience: {exp_text}"
+    # Index full resume in ChromaDB (experience/education/etc. are indexed separately by their own routes)
+    chroma_text = f"Name: {resume.name}. Title: {resume.title}. Summary: {resume.summary}. Skills: {', '.join(resume.skills)}"
     upsert_document("resume_main", chroma_text, {"type": "resume", "name": resume.name, "title": resume.title})
     
     return {"id": doc_id, "message": "Resume updated"}

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from bson import ObjectId
 
@@ -27,6 +27,7 @@ class EducationIn(BaseModel):
     end_year: Optional[int] = None      # blank = currently pursuing
     grade: Optional[str] = ""           # e.g. "8.7 CGPA" or "85%"
     description: Optional[str] = ""
+    tags: List[str] = []                # e.g. relevant coursework, honors
 
 @router.post("/", dependencies=[Depends(get_current_admin)])
 async def create_education(edu: EducationIn, db=Depends(get_db)):
@@ -34,7 +35,7 @@ async def create_education(edu: EducationIn, db=Depends(get_db)):
     result = await db.education.insert_one(doc)
     doc_id = str(result.inserted_id)
 
-    chroma_text = f"Education: {edu.degree} in {edu.field} at {edu.institution} ({edu.start_year} - {edu.end_year or 'Present'}). Grade: {edu.grade}. {edu.description}"
+    chroma_text = f"Education: {edu.degree} in {edu.field} at {edu.institution} ({edu.start_year} - {edu.end_year or 'Present'}). Grade: {edu.grade}. {edu.description}. Tags: {', '.join(edu.tags)}"
     upsert_document(f"edu_{doc_id}", chroma_text, {"type": "education", "institution": edu.institution, "degree": edu.degree})
     return {"id": doc_id, "message": "Education added"}
 
@@ -47,7 +48,7 @@ async def update_education(edu_id: str, edu: EducationIn, db=Depends(get_db)):
     if result.matched_count == 0:
         raise HTTPException(404, "Education entry not found")
 
-    chroma_text = f"Education: {edu.degree} in {edu.field} at {edu.institution} ({edu.start_year} - {edu.end_year or 'Present'}). Grade: {edu.grade}. {edu.description}"
+    chroma_text = f"Education: {edu.degree} in {edu.field} at {edu.institution} ({edu.start_year} - {edu.end_year or 'Present'}). Grade: {edu.grade}. {edu.description}. Tags: {', '.join(edu.tags)}"
     upsert_document(f"edu_{edu_id}", chroma_text, {"type": "education", "institution": edu.institution, "degree": edu.degree})
     return {"message": "Updated"}
 
