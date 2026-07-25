@@ -53,8 +53,8 @@ a{color:inherit}
 nav{position:fixed;top:1.1rem;left:50%;transform:translateX(-50%);z-index:100;width:min(920px,calc(100% - 2rem));background:rgba(10,11,17,0.65);backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--border);border-radius:999px;padding:0 0.5rem 0 1.4rem;height:60px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 40px rgba(0,0,0,0.35)}
 .nav-logo{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:0.2px;color:#fff;display:flex;align-items:center;gap:0.5rem}
 .nav-logo .mark{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--coral));flex-shrink:0}
-.nav-links{display:flex;gap:1.9rem;list-style:none}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:0.85rem;font-weight:500;letter-spacing:0.1px;transition:color 0.2s}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.1px;transition:color 0.2s}
 .nav-links a:hover{color:#fff}
 .nav-cta{background:linear-gradient(135deg,var(--violet),var(--coral));color:#fff;padding:0.55rem 1.3rem;border-radius:999px;font-size:0.83rem;font-weight:600;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;display:inline-block}
 .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 26px var(--glow)}
@@ -148,6 +148,9 @@ h2.section-title{font-family:var(--font-display);font-size:2.5rem;font-weight:70
 
 /* ── CERTIFICATIONS ── */
 .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.education-grid,.achievements-grid,.positions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.clickable-card{cursor:pointer}
+.cert-card .cert-desc{font-size:0.82rem;color:var(--text2);margin-top:0.6rem;line-height:1.55}
 .cert-card{border-radius:18px;padding:1.4rem;transition:transform 0.2s,box-shadow 0.2s;position:relative;text-align:left}
 .cert-card:hover{transform:translateY(-4px);box-shadow:0 18px 46px rgba(255,92,122,0.14)}
 .cert-issuer{font-size:0.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--coral);margin-bottom:0.5rem}
@@ -219,7 +222,7 @@ h2.section-title{font-family:var(--font-display);font-size:2.5rem;font-weight:70
 .form-group textarea{resize:vertical;min-height:80px}
 .btn-full{width:100%;padding:0.85rem;border-radius:14px;background:linear-gradient(135deg,var(--violet),var(--coral));color:#fff;border:none;font-weight:700;font-size:0.9rem;cursor:pointer;transition:transform 0.2s}
 .btn-full:hover{transform:translateY(-1px)}
-.admin-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:0.75rem 2rem;z-index:500;align-items:center;gap:1rem}
+.admin-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:0.75rem 2rem;z-index:500;align-items:center;gap:1rem;overflow-x:auto;white-space:nowrap}
 .admin-bar.show{display:flex}
 .admin-tab{padding:0.4rem 1rem;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text2);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s}
 .admin-tab.active,.admin-tab:hover{background:linear-gradient(135deg,var(--violet),var(--coral));color:#fff;border-color:transparent}
@@ -368,8 +371,11 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
   <div class="nav-logo"><span class="mark"></span>dev.portfolio</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#positions">Positions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Hire Me</a>
@@ -471,6 +477,20 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
   </div>
 </section>
 
+<!-- EDUCATION / ACADEMIC DETAILS -->
+<section id="education">
+  <div class="section-inner reveal">
+    <div class="section-head">
+      <div class="eyebrow">Academic Background</div>
+      <h2 class="section-title">Education</h2>
+      <p class="section-desc">Academic qualifications and institutions.</p>
+    </div>
+    <div class="education-grid" id="education-grid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading education...</div>
+    </div>
+  </div>
+</section>
+
 <!-- PROJECTS -->
 <section id="projects">
   <div class="section-inner reveal">
@@ -495,6 +515,34 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
     </div>
     <div class="certs-grid" id="certs-grid">
       <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading certifications...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-inner reveal">
+    <div class="section-head">
+      <div class="eyebrow">Recognition</div>
+      <h2 class="section-title">Academic Achievements</h2>
+      <p class="section-desc">Awards, honors, and recognitions earned along the way.</p>
+    </div>
+    <div class="achievements-grid" id="achievements-grid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading achievements...</div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITIONS OF RESPONSIBILITY -->
+<section id="positions">
+  <div class="section-inner reveal">
+    <div class="section-head">
+      <div class="eyebrow">Leadership</div>
+      <h2 class="section-title">Positions of Responsibility</h2>
+      <p class="section-desc">Leadership and organizational roles held.</p>
+    </div>
+    <div class="positions-grid" id="positions-grid">
+      <div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Loading positions...</div>
     </div>
   </div>
 </section>
@@ -572,6 +620,9 @@ footer strong{background:linear-gradient(135deg,var(--violet),var(--coral));-web
   <span style="font-size:0.82rem;color:var(--text2);font-weight:600">⚙ Admin Panel</span>
   <button class="admin-tab active" onclick="openAdminModal('project')">+ Project</button>
   <button class="admin-tab" onclick="openAdminModal('cert')">+ Certification</button>
+  <button class="admin-tab" onclick="openAdminModal('education')">+ Education</button>
+  <button class="admin-tab" onclick="openAdminModal('achievement')">+ Achievement</button>
+  <button class="admin-tab" onclick="openAdminModal('position')">+ Position</button>
   <button class="admin-tab" onclick="openAdminModal('resume')">✏ Resume</button>
   <button class="admin-tab-logout" onclick="adminLogout()">Logout ×</button>
 </div>
@@ -611,6 +662,9 @@ document.addEventListener('DOMContentLoaded', () => {
   loadResume();
   loadProjects();
   loadCertifications();
+  loadEducation();
+  loadAchievements();
+  loadPositions();
   loadChatSuggestions();
   if (adminToken) showAdminBar();
 });
@@ -712,7 +766,7 @@ async function loadCertifications() {
     }
     
     grid.innerHTML = certs.map(c => `
-      <div class="cert-card">
+      <div class="cert-card${c.credential_url ? ' clickable-card' : ''}" ${c.credential_url ? `onclick="handleCardClick(event,'${c.credential_url}')"` : ''}>
         <div class="cert-issuer">${c.issuer}</div>
         <div class="cert-title">${c.title}</div>
         <div class="cert-date">Issued: ${c.issue_date}${c.expiry_date ? ` · Expires: ${c.expiry_date}` : ''}</div>
@@ -722,6 +776,85 @@ async function loadCertifications() {
       </div>`).join('');
   } catch(e) {
     grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load certifications.</div>`;
+  }
+}
+
+// ── EDUCATION ─────────────────────────────────────────────────────────────
+async function loadEducation() {
+  const grid = document.getElementById('education-grid');
+  try {
+    const res = await fetch(`${API}/api/education/`);
+    const items = await res.json();
+
+    if (!items.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
+        No education entries yet. ${adminToken ? 'Click "+ Education" below to add one.' : 'Check back soon!'}</div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(e => `
+      <div class="cert-card">
+        <div class="cert-issuer">${e.start_year}${e.end_year ? ' — ' + e.end_year : ' — Present'}</div>
+        <div class="cert-title">${e.degree}${e.field ? ' in ' + e.field : ''}</div>
+        <div class="cert-date">${e.institution}${e.grade ? ' · ' + e.grade : ''}</div>
+        ${e.description ? `<p class="cert-desc">${e.description}</p>` : ''}
+        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editEducation('${e.id}')">Edit</button><button class="delete-btn" onclick="deleteEducation('${e.id}')">Delete</button></div>` : ''}
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load education.</div>`;
+  }
+}
+
+// ── ACHIEVEMENTS ──────────────────────────────────────────────────────────
+async function loadAchievements() {
+  const grid = document.getElementById('achievements-grid');
+  try {
+    const res = await fetch(`${API}/api/achievements/`);
+    const items = await res.json();
+
+    if (!items.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
+        No achievements yet. ${adminToken ? 'Click "+ Achievement" below to add one.' : 'Check back soon!'}</div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(a => `
+      <div class="cert-card${a.link ? ' clickable-card' : ''}" ${a.link ? `onclick="handleCardClick(event,'${a.link}')"` : ''}>
+        <div class="cert-issuer">${a.date || ''}</div>
+        <div class="cert-title">${a.title}</div>
+        ${a.issuer ? `<div class="cert-date">${a.issuer}</div>` : ''}
+        ${a.description ? `<p class="cert-desc">${a.description}</p>` : ''}
+        ${a.link ? `<a href="${a.link}" class="cert-link" target="_blank">🔗 View</a>` : ''}
+        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editAchievement('${a.id}')">Edit</button><button class="delete-btn" onclick="deleteAchievement('${a.id}')">Delete</button></div>` : ''}
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load achievements.</div>`;
+  }
+}
+
+// ── POSITIONS OF RESPONSIBILITY ──────────────────────────────────────────
+async function loadPositions() {
+  const grid = document.getElementById('positions-grid');
+  try {
+    const res = await fetch(`${API}/api/positions/`);
+    const items = await res.json();
+
+    if (!items.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">
+        No positions yet. ${adminToken ? 'Click "+ Position" below to add one.' : 'Check back soon!'}</div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map(p => `
+      <div class="cert-card">
+        <div class="cert-issuer">${p.start_date} — ${p.end_date || 'Present'}</div>
+        <div class="cert-title">${p.title}</div>
+        <div class="cert-date">${p.organization}</div>
+        ${p.description ? `<p class="cert-desc">${p.description}</p>` : ''}
+        ${adminToken ? `<div style="margin-top:0.75rem"><button class="edit-btn" onclick="editPosition('${p.id}')">Edit</button><button class="delete-btn" onclick="deletePosition('${p.id}')">Delete</button></div>` : ''}
+      </div>`).join('');
+  } catch(e) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:var(--text3);padding:3rem">Couldn't load positions.</div>`;
   }
 }
 
@@ -821,7 +954,7 @@ async function doLogin() {
     localStorage.setItem('portfolio_admin_token', adminToken);
     hideAdminLogin();
     showAdminBar();
-    loadProjects(); loadCertifications();
+    loadProjects(); loadCertifications(); loadEducation(); loadAchievements(); loadPositions();
   } catch(e) { err.textContent = 'Connection error'; err.style.display='block'; }
 }
 
@@ -831,7 +964,7 @@ function adminLogout() {
   adminToken = null;
   localStorage.removeItem('portfolio_admin_token');
   document.getElementById('adminBar').classList.remove('show');
-  loadProjects(); loadCertifications();
+  loadProjects(); loadCertifications(); loadEducation(); loadAchievements(); loadPositions();
 }
 
 // ── ADMIN MODAL ───────────────────────────────────────────────────────────
@@ -847,6 +980,15 @@ function openAdminModal(type) {
   } else if (type === 'cert') {
     title.innerHTML = 'Add Certification <button class="modal-close" onclick="closeAdminModal()">×</button>';
     body.innerHTML = certForm();
+  } else if (type === 'education') {
+    title.innerHTML = 'Add Education <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = educationForm();
+  } else if (type === 'achievement') {
+    title.innerHTML = 'Add Achievement <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = achievementForm();
+  } else if (type === 'position') {
+    title.innerHTML = 'Add Position <button class="modal-close" onclick="closeAdminModal()">×</button>';
+    body.innerHTML = positionForm();
   } else if (type === 'resume') {
     title.innerHTML = 'Update Resume <button class="modal-close" onclick="closeAdminModal()">×</button>';
     body.innerHTML = resumeForm();
@@ -882,11 +1024,46 @@ function certForm(data={}) {
     <div class="form-group"><label>Issuer *</label><input id="cIssuer" value="${data.issuer||''}" placeholder="e.g. Amazon Web Services"/></div>
     <div class="form-group"><label>Issue Date *</label><input id="cIssueDate" value="${data.issue_date||''}" placeholder="2024-03"/></div>
     <div class="form-group"><label>Expiry Date</label><input id="cExpiry" value="${data.expiry_date||''}" placeholder="2027-03 (leave blank if no expiry)"/></div>
-    <div class="form-group"><label>Credential URL</label><input id="cUrl" value="${data.credential_url||''}" placeholder="https://..."/></div>
+    <div class="form-group"><label>Credential URL</label><input id="cUrl" value="${data.credential_url||''}" placeholder="https://... (clicking the card will open this)"/></div>
     <div class="form-group"><label>Credential ID</label><input id="cId" value="${data.credential_id||''}" placeholder="ABC123"/></div>
     <div class="form-group"><label>Skills (press Enter to add)</label><div class="tags-input" id="skillsInput"><input id="skillsRaw" placeholder="Machine Learning, Python, ..."/></div></div>
     <div id="formMsg" class="success-msg" style="display:none"></div>
     <button class="btn-full" onclick="saveCert()">${editingId?'Update':'Save'} Certification</button>`;
+}
+
+function educationForm(data={}) {
+  return `
+    <div class="form-group"><label>Institution *</label><input id="eInstitution" value="${data.institution||''}" placeholder="e.g. XYZ Institute of Management"/></div>
+    <div class="form-group"><label>Degree *</label><input id="eDegree" value="${data.degree||''}" placeholder="e.g. PGDM"/></div>
+    <div class="form-group"><label>Field of Study *</label><input id="eField" value="${data.field||''}" placeholder="e.g. Big Data Analytics"/></div>
+    <div class="form-group"><label>Start Year *</label><input id="eStartYear" type="number" value="${data.start_year||''}" placeholder="2024"/></div>
+    <div class="form-group"><label>End Year</label><input id="eEndYear" type="number" value="${data.end_year||''}" placeholder="2026 (leave blank if ongoing)"/></div>
+    <div class="form-group"><label>Grade / CGPA</label><input id="eGrade" value="${data.grade||''}" placeholder="e.g. 8.7 CGPA or 85%"/></div>
+    <div class="form-group"><label>Description</label><textarea id="eDesc" placeholder="Relevant coursework, honors, etc.">${data.description||''}</textarea></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveEducation()">${editingId?'Update':'Save'} Education</button>`;
+}
+
+function achievementForm(data={}) {
+  return `
+    <div class="form-group"><label>Title *</label><input id="aTitle" value="${data.title||''}" placeholder="e.g. Winner - Smart India Hackathon"/></div>
+    <div class="form-group"><label>Issuer / Event</label><input id="aIssuer" value="${data.issuer||''}" placeholder="e.g. Government of India"/></div>
+    <div class="form-group"><label>Date</label><input id="aDate" value="${data.date||''}" placeholder="2024 or 2024-03"/></div>
+    <div class="form-group"><label>Description</label><textarea id="aDesc" placeholder="What was it for?">${data.description||''}</textarea></div>
+    <div class="form-group"><label>Link (optional)</label><input id="aLink" value="${data.link||''}" placeholder="https://... (clicking the card will open this)"/></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="saveAchievement()">${editingId?'Update':'Save'} Achievement</button>`;
+}
+
+function positionForm(data={}) {
+  return `
+    <div class="form-group"><label>Title *</label><input id="poTitle" value="${data.title||''}" placeholder="e.g. Class Representative"/></div>
+    <div class="form-group"><label>Organization *</label><input id="poOrg" value="${data.organization||''}" placeholder="e.g. Dept. of Big Data Analytics"/></div>
+    <div class="form-group"><label>Start Date *</label><input id="poStart" value="${data.start_date||''}" placeholder="2023-07"/></div>
+    <div class="form-group"><label>End Date</label><input id="poEnd" value="${data.end_date||''}" placeholder="2024-06 (leave blank for Present)"/></div>
+    <div class="form-group"><label>Description</label><textarea id="poDesc" placeholder="Responsibilities and impact...">${data.description||''}</textarea></div>
+    <div id="formMsg" class="success-msg" style="display:none"></div>
+    <button class="btn-full" onclick="savePosition()">${editingId?'Update':'Save'} Position</button>`;
 }
 
 function resumeForm() {
@@ -1000,6 +1177,80 @@ async function saveCert() {
   }
 }
 
+async function saveEducation() {
+  const payload = {
+    institution: document.getElementById('eInstitution').value,
+    degree: document.getElementById('eDegree').value,
+    field: document.getElementById('eField').value,
+    start_year: parseInt(document.getElementById('eStartYear').value) || null,
+    end_year: document.getElementById('eEndYear').value ? parseInt(document.getElementById('eEndYear').value) : null,
+    grade: document.getElementById('eGrade').value,
+    description: document.getElementById('eDesc').value
+  };
+  const url = editingId ? `${API}/api/education/${editingId}` : `${API}/api/education/`;
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadEducation(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
+async function saveAchievement() {
+  const payload = {
+    title: document.getElementById('aTitle').value,
+    issuer: document.getElementById('aIssuer').value,
+    date: document.getElementById('aDate').value,
+    description: document.getElementById('aDesc').value,
+    link: document.getElementById('aLink').value
+  };
+  const url = editingId ? `${API}/api/achievements/${editingId}` : `${API}/api/achievements/`;
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadAchievements(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
+async function savePosition() {
+  const payload = {
+    title: document.getElementById('poTitle').value,
+    organization: document.getElementById('poOrg').value,
+    start_date: document.getElementById('poStart').value,
+    end_date: document.getElementById('poEnd').value || 'Present',
+    description: document.getElementById('poDesc').value
+  };
+  const url = editingId ? `${API}/api/positions/${editingId}` : `${API}/api/positions/`;
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, {
+    method, headers: {'Content-Type':'application/json','Authorization':`Bearer ${adminToken}`},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  const msg = document.getElementById('formMsg');
+  if (res.ok) {
+    msg.textContent = '✓ Saved!'; msg.style.display='block';
+    setTimeout(()=>{ closeAdminModal(); loadPositions(); }, 1200);
+  } else {
+    msg.className='error-msg'; msg.textContent = data.detail || 'Error'; msg.style.display='block';
+  }
+}
+
 async function loadResumeIntoForm() {
   try {
     const res = await fetch(`${API}/api/resume/`);
@@ -1103,6 +1354,65 @@ async function deleteCert(id) {
   loadCertifications();
 }
 
+async function editEducation(id) {
+  const res = await fetch(`${API}/api/education/`);
+  const all = await res.json();
+  const e = all.find(x=>x.id===id);
+  if (!e) return;
+  editingId = id;
+  document.getElementById('modalTitle').innerHTML = 'Edit Education <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  document.getElementById('modalBody').innerHTML = educationForm(e);
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deleteEducation(id) {
+  if (!confirm('Delete this education entry?')) return;
+  await fetch(`${API}/api/education/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadEducation();
+}
+
+async function editAchievement(id) {
+  const res = await fetch(`${API}/api/achievements/`);
+  const all = await res.json();
+  const a = all.find(x=>x.id===id);
+  if (!a) return;
+  editingId = id;
+  document.getElementById('modalTitle').innerHTML = 'Edit Achievement <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  document.getElementById('modalBody').innerHTML = achievementForm(a);
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deleteAchievement(id) {
+  if (!confirm('Delete this achievement?')) return;
+  await fetch(`${API}/api/achievements/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadAchievements();
+}
+
+async function editPosition(id) {
+  const res = await fetch(`${API}/api/positions/`);
+  const all = await res.json();
+  const p = all.find(x=>x.id===id);
+  if (!p) return;
+  editingId = id;
+  document.getElementById('modalTitle').innerHTML = 'Edit Position <button class="modal-close" onclick="closeAdminModal()">×</button>';
+  document.getElementById('modalBody').innerHTML = positionForm(p);
+  document.getElementById('adminModal').classList.add('show');
+}
+
+async function deletePosition(id) {
+  if (!confirm('Delete this position?')) return;
+  await fetch(`${API}/api/positions/${id}`, {method:'DELETE', headers:{'Authorization':`Bearer ${adminToken}`}});
+  loadPositions();
+}
+
+// Opens a card's link when clicking anywhere on it EXCEPT on an inner button/link
+// (those handle their own clicks / stop propagation).
+function handleCardClick(e, url) {
+  if (!url) return;
+  if (e.target.closest('button, a')) return;
+  window.open(url, '_blank', 'noopener');
+}
+
 function toggleMobile() {
   const links = document.querySelector('.nav-links');
   links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
@@ -1198,7 +1508,7 @@ function toggleMobile() {
   bindMotion(document);
 
   /* keep binding new cards as they're loaded async from the API */
-  ['projects-grid','certs-grid'].forEach(id => {
+  ['projects-grid','certs-grid','education-grid','achievements-grid','positions-grid'].forEach(id => {
     const grid = document.getElementById(id);
     if (!grid) return;
     new MutationObserver(() => bindMotion(grid)).observe(grid, { childList: true });

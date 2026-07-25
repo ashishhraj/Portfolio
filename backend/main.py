@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from routes import projects, certifications, resume, chat, auth
+from routes import projects, certifications, resume, chat, auth, education, achievements, positions
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -44,6 +44,9 @@ app.include_router(projects.router,       prefix="/api/projects",     tags=["Pro
 app.include_router(certifications.router, prefix="/api/certifications",tags=["Certifications"])
 app.include_router(resume.router,         prefix="/api/resume",       tags=["Resume"])
 app.include_router(chat.router,           prefix="/api/chat",         tags=["Chat"])
+app.include_router(education.router,      prefix="/api/education",    tags=["Education"])
+app.include_router(achievements.router,   prefix="/api/achievements", tags=["Achievements"])
+app.include_router(positions.router,      prefix="/api/positions",    tags=["Positions"])
 
 @app.get("/")
 async def root():
