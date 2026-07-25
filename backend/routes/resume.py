@@ -15,7 +15,8 @@ router = APIRouter()
 class ResumeIn(BaseModel):
     name: str
     title: str
-    summary: str
+    summary: str                         # short tagline shown under the hero name
+    about: Optional[str] = ""            # longer bio paragraph shown in the About section
     email: str
     phone: Optional[str] = ""
     location: Optional[str] = ""
@@ -46,7 +47,7 @@ async def update_resume(resume: ResumeIn, db=Depends(get_db)):
         doc_id = str(result.inserted_id)
     
     # Index full resume in ChromaDB (experience/education/etc. are indexed separately by their own routes)
-    chroma_text = f"Name: {resume.name}. Title: {resume.title}. Summary: {resume.summary}. Skills: {', '.join(resume.skills)}"
+    chroma_text = f"Name: {resume.name}. Title: {resume.title}. Summary: {resume.summary}. About: {resume.about}. Skills: {', '.join(resume.skills)}"
     upsert_document("resume_main", chroma_text, {"type": "resume", "name": resume.name, "title": resume.title})
     
     return {"id": doc_id, "message": "Resume updated"}
