@@ -19,15 +19,19 @@ SYSTEM_PROMPT = """You are an intelligent AI assistant for a personal portfolio 
 Your job is to answer questions about the portfolio owner professionally and accurately.
 You will be provided with relevant context from their resume, projects, and certifications.
 
+CRITICAL ACCURACY RULES (do not break these under any circumstance):
+- ONLY state facts (certification names, issuers, dates, companies, degrees, skills, etc.) that are EXPLICITLY present in the "RELEVANT CONTEXT" section below.
+- NEVER invent, guess, assume, or extrapolate a certification, credential, employer, date, or qualification that is not explicitly written in the context, even if it sounds plausible or common in the industry.
+- If the context does not contain the answer to the question, say plainly: "I don't have that information in my records — feel free to reach out via the contact section for details." Do NOT fill the gap with a fabricated answer.
+- If the context lists specific certifications, name exactly those and no others. Do not add extra certifications from general knowledge of what certifications exist.
+- When unsure whether something is confirmed by the context, err on the side of saying you don't have that information rather than guessing.
+
 Guidelines:
 - Be professional, friendly, and concise
 - Only answer questions related to the portfolio owner's professional background
-- If asked about something not in the context, say you don't have that information
-- Highlight their strengths in automation, data science, big data analytics, and DevOps
-- For technical questions about projects, explain them clearly
-- Encourage visitors to reach out via the contact information provided
-
-The portfolio owner is pursuing PGDM in Big Data Analytics with experience as an Automation Engineer and Data Science Engineer, with skills in dashboards and DevOps."""
+- Highlight their strengths in automation, data science, big data analytics, and DevOps where the context supports it
+- For technical questions about projects, explain them clearly using only what's in the context
+- Encourage visitors to reach out via the contact information provided when you don't have an answer"""
 
 class Message(BaseModel):
     role: str   # "user" or "assistant"
@@ -69,6 +73,26 @@ async def chat(req: ChatRequest, db=Depends(get_db)):
                 f"Skills: {', '.join(resume_doc.get('skills', []))}"
             )
 
+        # Pull certifications directly from MongoDB (source of truth) so the
+        # model always has the exact, complete, up-to-date list — not just
+        # whatever the semantic search happened to retrieve from Chroma.
+        cert_docs = await db.certifications.find({}).sort("issue_date", -1).to_list(100)
+        if cert_docs:
+            cert_lines = [
+                f"- {c.get('title')} (Issuer: {c.get('issuer')}, Issued: {c.get('issue_date')})"
+                for c in cert_docs
+            ]
+            context_parts.append(
+                "[CERTIFICATIONS - COMPLETE AND AUTHORITATIVE LIST] "
+                "This is the full and only list of certifications the portfolio owner holds. "
+                "Do not mention any certification not in this list:\n" + "\n".join(cert_lines)
+            )
+        else:
+            context_parts.append(
+                "[CERTIFICATIONS] No certifications are currently on record. "
+                "If asked about certifications, say none are listed rather than inventing one."
+            )
+
         context = (
             "\n\n".join(context_parts)
             if context_parts
@@ -93,7 +117,7 @@ async def chat(req: ChatRequest, db=Depends(get_db)):
         resp = client.chat.completions.create(
             model=_MODEL,
             messages=messages,
-            temperature=0.4,
+            temperature=0.2,
             max_tokens=800,
         )
 
