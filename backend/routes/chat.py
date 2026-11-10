@@ -9,7 +9,7 @@ from db.mongo import get_db
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-_MODEL = "llama-3.3-70b-versatile"
+_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
 
 
 def _get_groq_client():
